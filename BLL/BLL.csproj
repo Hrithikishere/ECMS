@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DTOs\CartCartItemDTO.cs" />
     <Compile Include="DTOs\CartDTO.cs" />
     <Compile Include="DTOs\CartItemDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="DTOs\OrderDTO.cs" />
     <Compile Include="DTOs\OrderItemDTO.cs" />
     <Compile Include="DTOs\OrderOrderItemsDTO.cs" />
+    <Compile Include="DTOs\ProductCartItemDTO.cs" />
     <Compile Include="DTOs\ProductDTO.cs" />
     <Compile Include="DTOs\ProductInventoryLogDTO.cs" />
     <Compile Include="DTOs\ProductOrderItemDTO.cs" />

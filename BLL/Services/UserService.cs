@@ -50,6 +50,19 @@ namespace BLL.Services
             var response = DataAccessFactory.UserData().Create(mapped);
             return response;
         }
+
+        public static bool Update(UserDTO userDTO)
+        {
+            var cfg = new MapperConfiguration(c =>
+            {
+                c.CreateMap<UserDTO, User>();
+            });
+            var mapper = new Mapper(cfg);
+            var mapped = mapper.Map<User>(userDTO);
+
+            var response = DataAccessFactory.UserData().Update(mapped);
+            return response;
+        }
         public static bool Delete(int Id)
         {
             var response = DataAccessFactory.UserData().Delete(Id);

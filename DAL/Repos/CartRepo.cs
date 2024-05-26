@@ -14,12 +14,25 @@ namespace DAL.Repos
         {
             try
             {
-                db.Carts.Add(obj);
+                Cart cart = new Cart
+                {
+                    CustomerId = obj.CustomerId
+                };
+
+                db.Carts.Add(cart);
+                db.SaveChanges();
+
+                foreach (var item in obj.CartItems)
+                {
+                    item.CartId = cart.Id;
+                    db.CartItems.Add(item);
+                }
+
                 return db.SaveChanges() > 0;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error occurred in Database while creating cart: {ex.Message}");
+                Console.WriteLine($"Error occurred while creating cart: {ex.Message}");
                 return false;
             }
         }
@@ -31,7 +44,15 @@ namespace DAL.Repos
                 var cartToDelete = Read(id);
                 if (cartToDelete == null) return false;
 
+                // Remove all associated cart items
+                foreach (var item in cartToDelete.CartItems.ToList())
+                {
+                    db.CartItems.Remove(item);
+                }
+
+                // Remove the cart itself
                 db.Carts.Remove(cartToDelete);
+
                 return db.SaveChanges() > 0;
             }
             catch (Exception ex)
@@ -40,6 +61,7 @@ namespace DAL.Repos
                 return false;
             }
         }
+
 
         public List<Cart> Read()
         {
@@ -71,14 +93,45 @@ namespace DAL.Repos
         {
             try
             {
-                var existingCart = Read(obj.Id);
+                var existingCart = db.Carts.Include("CartItems").FirstOrDefault(c => c.Id == obj.Id);
                 if (existingCart == null)
                 {
                     Console.WriteLine($"Cart with Id {obj.Id} does not exist.");
                     return false;
                 }
 
-                db.Entry(existingCart).CurrentValues.SetValues(obj);
+                existingCart.CustomerId = obj.CustomerId;
+                var existingCartItems = existingCart.CartItems.ToList();
+                var updatedCartItems = obj.CartItems;
+
+                foreach (var item in updatedCartItems)
+                {
+                    var existingItem = existingCartItems.FirstOrDefault(i => i.Id == item.Id);
+                    if (existingItem != null)
+                    {
+                        existingItem.ProductId = item.ProductId;
+                        existingItem.Quantity = item.Quantity;
+                    }
+                    else
+                    {
+                        CartItem newItem = new CartItem
+                        {
+                            CartId = existingCart.Id,
+                            ProductId = item.ProductId,
+                            Quantity = item.Quantity,
+                        };
+                        db.CartItems.Add(newItem);
+                    }
+                }
+
+                foreach (var existingItem in existingCartItems)
+                {
+                    if (!updatedCartItems.Any(i => i.Id == existingItem.Id))
+                    {
+                        db.CartItems.Remove(existingItem);
+                    }
+                }
+
                 return db.SaveChanges() > 0;
             }
             catch (Exception ex)
@@ -86,8 +139,8 @@ namespace DAL.Repos
                 Console.WriteLine($"Error occurred while updating cart: {ex.Message}");
                 return false;
             }
-        }
 
+        }
 
     }
 }

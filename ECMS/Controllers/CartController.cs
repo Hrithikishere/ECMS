@@ -9,15 +9,15 @@ using System.Web.Http;
 
 namespace ECMS.Controllers
 {
-    public class ProductController : ApiController
+    public class CartController : ApiController
     {
         [HttpGet]
-        [Route("api/products")]
-        public HttpResponseMessage Products()
+        [Route("api/carts")]
+        public HttpResponseMessage Carts()
         {
             try
             {
-                var data = ProductService.Read();
+                var data = CartService.Read();
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
@@ -27,12 +27,12 @@ namespace ECMS.Controllers
         }
 
         [HttpGet]
-        [Route("api/products/{id}")]
-        public HttpResponseMessage Products(int id)
+        [Route("api/carts/{id}")]
+        public HttpResponseMessage Carts(int id)
         {
             try
             {
-                var data = ProductService.Read(id);
+                var data = CartService.Read(id);
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
@@ -42,12 +42,12 @@ namespace ECMS.Controllers
         }
 
         [HttpPost]
-        [Route("api/products/create")]
-        public HttpResponseMessage Products(ProductDTO productDTO)
+        [Route("api/carts/create")]
+        public HttpResponseMessage Carts(CartCartItemDTO cartCartItemDTO)
         {
             try
             {
-                var data = ProductService.Create(productDTO);
+                var data = CartService.AddToCart(cartCartItemDTO);
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
@@ -57,93 +57,68 @@ namespace ECMS.Controllers
         }
         
         [HttpPost]
-        [Route("api/products/update")]
-        public HttpResponseMessage ProductsUpdate(ProductDTO productDTO)
+        [Route("api/carts/update")]
+        public HttpResponseMessage CartUpdate(CartCartItemDTO cartCartItemDTO)
         {
             try
             {
-                var data = ProductService.Update(productDTO);
+                var data = CartService.UpdateCart(cartCartItemDTO);
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+
             }
         }
 
         [HttpPost]
-        [Route("api/products/delete/{id}")]
-        public HttpResponseMessage ProductsDelete(int id)
+        [Route("api/carts/delete/{id}")]
+        public HttpResponseMessage CartDelete(int id)
         {
             try
             {
-                var data = ProductService.Delete(id);
+                var data = CartService.Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+
             }
         }
 
         [HttpGet]
-        [Route("api/products/inventorylogs")]
-        public HttpResponseMessage ProductsWithInventoryLogs()
+        [Route("api/carts/cartitems")]
+        public HttpResponseMessage CartsWithCartItems()
         {
             try
             {
-                var data = ProductService.ProductsWithInventoryLogs();
+                var data = CartService.CartWithCartItems();
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+
             }
         }
 
         [HttpGet]
-        [Route("api/products/inventorylogs/{id}")]
-        public HttpResponseMessage ProductsWithInventoryLogs(int id)
+        [Route("api/carts/cartitems/{id}")]
+        public HttpResponseMessage CartsWithCartItems(int id)
         {
             try
             {
-                var data = ProductService.ProductsWithInventoryLogs(id);
+                var data = CartService.CartWithCartItems(id);
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+
             }
         }
 
-        [HttpGet]
-        [Route("api/products/orderitems")]
-        public HttpResponseMessage ProductsWithOrderItems()
-        {
-            try
-            {
-                var data = ProductService.ProductsWithOrderItems();
-                return Request.CreateResponse(HttpStatusCode.OK, data);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
-
-        [HttpGet]
-        [Route("api/products/orderitems/{id}")]
-        public HttpResponseMessage ProductsWithOrderItems(int id)
-        {
-            try
-            {
-                var data = ProductService.ProductsWithOrderItems(id);
-                return Request.CreateResponse(HttpStatusCode.OK, data);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
-            }
-        }
     }
 }

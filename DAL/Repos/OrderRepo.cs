@@ -32,7 +32,6 @@ namespace DAL.Repos
                 {
                     item.OrderId = order.Id;
                     db.OrderItems.Add(item);
-                    db.SaveChanges();
                 }
 
                 return db.SaveChanges() > 0;

@@ -50,6 +50,18 @@ namespace BLL.Services
             var response = DataAccessFactory.InventoryLogData().Create(mapped);
             return response;
         }
+        public static bool Update(InventoryLogDTO inventoryLogDTO)
+        {
+            var cfg = new MapperConfiguration(c =>
+            {
+                c.CreateMap<InventoryLogDTO, InventoryLog>();
+            });
+            var mapper = new Mapper(cfg);
+            var mapped = mapper.Map<InventoryLog>(inventoryLogDTO);
+
+            var response = DataAccessFactory.InventoryLogData().Update(mapped);
+            return response;
+        }
         public static bool Delete(int Id)
         {
             var response = DataAccessFactory.InventoryLogData().Delete(Id);

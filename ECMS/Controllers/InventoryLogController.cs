@@ -55,6 +55,21 @@ namespace ECMS.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
+        
+        [HttpPost]
+        [Route("api/inventorylogs/update")]
+        public HttpResponseMessage InventoryLogsUpdate(InventoryLogDTO inventoryLogDTO)
+        {
+            try
+            {
+                var data = InventoryLogService.Update(inventoryLogDTO);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
 
         [HttpPost]
         [Route("api/inventorylogs/delete/{id}")]

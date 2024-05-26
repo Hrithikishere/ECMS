@@ -60,6 +60,21 @@ namespace ECMS.Controllers
         }
 
         [HttpPost]
+        [Route("api/users/update")]
+        public HttpResponseMessage UsersUpdate(UserDTO userDTO)
+        {
+            try
+            {
+                var data = UserService.Update(userDTO);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [HttpPost]
         [Route("api/users/delete/{id}")]
         public HttpResponseMessage UsersDelete(int id)
         {
