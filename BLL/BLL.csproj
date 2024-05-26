@@ -59,7 +59,9 @@
     <Compile Include="DTOs\ProductDTO.cs" />
     <Compile Include="DTOs\ProductInventoryLogDTO.cs" />
     <Compile Include="DTOs\ProductOrderItemDTO.cs" />
+    <Compile Include="DTOs\UserCartDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
+    <Compile Include="DTOs\UserOrderDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CartItemService.cs" />
     <Compile Include="Services\CartService.cs" />

@@ -69,5 +69,127 @@ namespace BLL.Services
             return response;
         }
 
+
+
+        public static List<UserCartDTO> UsersWithCartItems()
+        {
+
+            var data = DataAccessFactory.UserData().Read();
+
+            List<UserCartDTO> listOfUserCartDTOs = new List<UserCartDTO>();
+
+            foreach(var item in data)
+            {
+                UserCartDTO userCartDTO = new UserCartDTO();
+                userCartDTO.Id = item.Id;
+                userCartDTO.FirstName = item.FirstName;
+                userCartDTO.LastName = item.LastName;
+                userCartDTO.Email = item.Email;
+                userCartDTO.Address = item.Address;
+                userCartDTO.JoinDate = item.JoinDate;
+                userCartDTO.Phone = item.Phone;
+                userCartDTO.Role = item.Role;
+                userCartDTO.Password = item.Password;
+
+                foreach(var item2 in item.Carts)
+                {
+                    CartDTO cartDTO = new CartDTO();
+                    cartDTO.Id = item2.Id;
+                    cartDTO.CustomerId = item2.CustomerId;
+
+                    userCartDTO.Carts.Add(cartDTO);
+                }
+                listOfUserCartDTOs.Add(userCartDTO);
+            }
+            return listOfUserCartDTOs;
+
+        }
+        public static UserCartDTO UsersWithCartItems(int Id)
+        {
+
+            var data = DataAccessFactory.UserData().Read(Id);
+
+            UserCartDTO userCartDTO = new UserCartDTO();
+            userCartDTO.Id = data.Id;
+            userCartDTO.FirstName = data.FirstName;
+            userCartDTO.LastName = data.LastName;
+            userCartDTO.Email = data.Email;
+            userCartDTO.Address = data.Address;
+            userCartDTO.JoinDate = data.JoinDate;
+            userCartDTO.Phone = data.Phone;
+            userCartDTO.Role = data.Role;
+            userCartDTO.Password = data.Password;
+
+            foreach (var item2 in data.Carts)
+            {
+                CartDTO cartDTO = new CartDTO();
+                cartDTO.Id = item2.Id;
+                cartDTO.CustomerId = item2.CustomerId;
+
+                userCartDTO.Carts.Add(cartDTO);
+            }
+
+            return userCartDTO;
+        }
+        public static List<UserOrderDTO> UsersWithOrderItems()
+        {
+
+            var data = DataAccessFactory.UserData().Read();
+
+            List<UserOrderDTO> listOfUserOrderDTOs = new List<UserOrderDTO>();
+
+            foreach (var item in data)
+            {
+                UserOrderDTO userOrderDTO = new UserOrderDTO();
+                userOrderDTO.Id = item.Id;
+                userOrderDTO.FirstName = item.FirstName;
+                userOrderDTO.LastName = item.LastName;
+                userOrderDTO.Email = item.Email;
+                userOrderDTO.Address = item.Address;
+                userOrderDTO.JoinDate = item.JoinDate;
+                userOrderDTO.Phone = item.Phone;
+                userOrderDTO.Role = item.Role;
+                userOrderDTO.Password = item.Password;
+
+                foreach (var item2 in item.Orders)
+                {
+                    OrderDTO orderDTO = new OrderDTO();
+                    orderDTO.Id = item2.Id;
+                    orderDTO.CustomerId = item2.CustomerId;
+
+                    userOrderDTO.Orders.Add(orderDTO);
+                }
+                listOfUserOrderDTOs.Add(userOrderDTO);
+            }
+            return listOfUserOrderDTOs;
+
+        }
+        public static UserOrderDTO UsersWithOrderItems(int Id)
+        {
+
+            var data = DataAccessFactory.UserData().Read(Id);
+
+            UserOrderDTO userOrderDTO = new UserOrderDTO();
+            userOrderDTO.Id = data.Id;
+            userOrderDTO.FirstName = data.FirstName;
+            userOrderDTO.LastName = data.LastName;
+            userOrderDTO.Email = data.Email;
+            userOrderDTO.Address = data.Address;
+            userOrderDTO.JoinDate = data.JoinDate;
+            userOrderDTO.Phone = data.Phone;
+            userOrderDTO.Role = data.Role;
+            userOrderDTO.Password = data.Password;
+
+            foreach (var item2 in data.Orders)
+            {
+                OrderDTO orderDTO = new OrderDTO();
+                orderDTO.Id = item2.Id;
+                orderDTO.CustomerId = item2.CustomerId;
+
+                userOrderDTO.Orders.Add(orderDTO);
+            }
+
+            return userOrderDTO;
+        }
     }
 }

@@ -88,5 +88,65 @@ namespace ECMS.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
+
+        [HttpGet]
+        [Route("api/users/orderitems")]
+        public HttpResponseMessage UsersWithOrderItems()
+        {
+            try
+            {
+                var data = UserService.UsersWithOrderItems();
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/users/orderitems/{id}")]
+        public HttpResponseMessage UsersWithOrderItems(int id)
+        {
+            try
+            {
+                var data = UserService.UsersWithOrderItems(id);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/users/cartitems")]
+        public HttpResponseMessage UsersWithCartItems()
+        {
+            try
+            {
+                var data = UserService.UsersWithCartItems();
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/users/cartitems/{id}")]
+        public HttpResponseMessage UsersWithCartItems(int id)
+        {
+            try
+            {
+                var data = UserService.UsersWithCartItems(id);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
     }
 }
