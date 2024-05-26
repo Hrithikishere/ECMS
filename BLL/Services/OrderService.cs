@@ -89,5 +89,92 @@ namespace BLL.Services
             return response;
 
         }
+
+        public static List<OrderOrderItemsDTO> OrderWithOrderItems()
+        {
+
+            var data = DataAccessFactory.OrderData().Read();
+
+            var cfg = new MapperConfiguration(c =>
+            {
+                c.CreateMap<Order, OrderOrderItemsDTO>();
+                c.CreateMap<OrderItem, OrderItemDTO>();
+            });
+            var mapper = new Mapper(cfg);
+            var mapped = mapper.Map<List<OrderOrderItemsDTO>>(data);
+            return mapped;
+
+        }
+        public static OrderOrderItemsDTO OrderWithOrderItems(int Id)
+        {
+
+            var data = DataAccessFactory.OrderData().Read(Id);
+
+            var cfg = new MapperConfiguration(c =>
+            {
+                c.CreateMap<Order, OrderOrderItemsDTO>();
+                c.CreateMap<OrderItem, OrderItemDTO>();
+            });
+            var mapper = new Mapper(cfg);
+            var mapped = mapper.Map<OrderOrderItemsDTO>(data);
+            return mapped;
+
+        }
+
+        public static bool UpdateOrder(OrderOrderItemsDTO orderOrderItemsDTO)
+        {
+            // Retrieve the existing order
+            var existingOrder = DataAccessFactory.OrderData().Read(orderOrderItemsDTO.Id);
+            if (existingOrder == null)
+            {
+                throw new Exception($"Order with Id {orderOrderItemsDTO.Id} does not exist.");
+            }
+
+            existingOrder.CustomerId = orderOrderItemsDTO.CustomerId;
+            existingOrder.OrderDate = orderOrderItemsDTO.OrderDate;
+            existingOrder.TotalAmount = orderOrderItemsDTO.TotalAmount;
+            existingOrder.Status = orderOrderItemsDTO.Status;
+            existingOrder.ShippingAddress = orderOrderItemsDTO.ShippingAddress;
+            existingOrder.BillingAddress = orderOrderItemsDTO.BillingAddress;
+
+            var existingOrderItems = existingOrder.OrderItems.ToList();
+            var updatedOrderItems = orderOrderItemsDTO.OrderItems;
+
+            foreach (var itemDTO in updatedOrderItems)
+            {
+                var existingItem = existingOrderItems.FirstOrDefault(i => i.Id == itemDTO.Id);
+                if (existingItem != null)
+                {
+                    existingItem.ProductId = itemDTO.ProductId;
+                    existingItem.Quantity = itemDTO.Quantity;
+                    existingItem.UnitPrice = itemDTO.UnitPrice;
+                    existingItem.TotalPrice = itemDTO.TotalPrice;
+                }
+                else
+                {
+                    OrderItem newItem = new OrderItem
+                    {
+                        OrderId = existingOrder.Id,
+                        ProductId = itemDTO.ProductId,
+                        Quantity = itemDTO.Quantity,
+                        UnitPrice = itemDTO.UnitPrice,
+                        TotalPrice = itemDTO.TotalPrice
+                    };
+                    existingOrder.OrderItems.Add(newItem);
+                }
+            }
+
+            foreach (var existingItem in existingOrderItems)
+            {
+                if (!updatedOrderItems.Any(i => i.Id == existingItem.Id))
+                {
+                    existingOrder.OrderItems.Remove(existingItem);
+                }
+            }
+            var response = DataAccessFactory.OrderData().Update(existingOrder);
+            return response;
+        }
+
+
     }
 }

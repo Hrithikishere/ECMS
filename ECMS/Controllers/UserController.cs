@@ -20,7 +20,7 @@ namespace ECMS.Controllers
         {
             try
             {
-                var data = CategoryService.Read();
+                var data = UserService.Read();
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
@@ -35,7 +35,7 @@ namespace ECMS.Controllers
         {
             try
             {
-                var data = CategoryService.Read(id);
+                var data = UserService.Read(id);
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
@@ -46,11 +46,11 @@ namespace ECMS.Controllers
 
         [HttpPost]
         [Route("api/users/create")]
-        public HttpResponseMessage Users(CategoryDTO categoryDTO)
+        public HttpResponseMessage Users(UserDTO userDTO)
         {
             try
             {
-                var data = CategoryService.Create(categoryDTO);
+                var data = UserService.Create(userDTO);
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)
@@ -65,7 +65,7 @@ namespace ECMS.Controllers
         {
             try
             {
-                var data = CategoryService.Delete(id);
+                var data = UserService.Delete(id);
                 return Request.CreateResponse(HttpStatusCode.OK, data);
             }
             catch (Exception ex)

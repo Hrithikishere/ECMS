@@ -2,6 +2,7 @@
 using DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,9 +54,57 @@ namespace DAL.Repos
 
         public bool Update(Order obj)
         {
-            var ex = Read(obj.Id);
-            db.Entry(ex).CurrentValues.SetValues(obj);
+            var existingOrder = db.Orders.Include("OrderItems").FirstOrDefault(o => o.Id == obj.Id);
+            if (existingOrder == null)
+            {
+                throw new Exception($"Order with Id {obj.Id} does not exist.");
+            }
+
+            existingOrder.CustomerId = obj.CustomerId;
+            existingOrder.OrderDate = obj.OrderDate;
+            existingOrder.TotalAmount = obj.TotalAmount;
+            existingOrder.Status = obj.Status;
+            existingOrder.ShippingAddress = obj.ShippingAddress;
+            existingOrder.BillingAddress = obj.BillingAddress;
+
+
+            var existingOrderItems = existingOrder.OrderItems.ToList();
+            var updatedOrderItems = obj.OrderItems;
+ 
+            foreach (var item in updatedOrderItems)
+            {
+                var existingItem = existingOrderItems.FirstOrDefault(i => i.Id == item.Id);
+                if (existingItem != null)
+                {
+                    existingItem.ProductId = item.ProductId;
+                    existingItem.Quantity = item.Quantity;
+                    existingItem.UnitPrice = item.UnitPrice;
+                    existingItem.TotalPrice = item.TotalPrice;
+                }
+                else
+                {
+                    OrderItem newItem = new OrderItem
+                    {
+                        OrderId = existingOrder.Id,
+                        ProductId = item.ProductId,
+                        Quantity = item.Quantity,
+                        UnitPrice = item.UnitPrice,
+                        TotalPrice = item.TotalPrice
+                    };
+                    db.OrderItems.Add(newItem);
+                }
+            }
+
+            foreach (var existingItem in existingOrderItems)
+            {
+                if (!updatedOrderItems.Any(i => i.Id == existingItem.Id))
+                {
+                    db.OrderItems.Remove(existingItem);
+                }
+            }
+
             return db.SaveChanges() > 0;
         }
+ 
     }
 }
