@@ -18,5 +18,6 @@ namespace DAL
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set;}
+        public DbSet<Token> Tokens { get; set;}
     }
 }

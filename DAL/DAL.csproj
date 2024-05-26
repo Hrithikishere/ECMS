@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="DataAccessFactory.cs" />
     <Compile Include="ECMSContext.cs" />
+    <Compile Include="Interfaces\IAuth.cs" />
     <Compile Include="Interfaces\IRepo.cs" />
     <Compile Include="Migrations\202405241718404_initDB.cs" />
     <Compile Include="Migrations\202405241718404_initDB.Designer.cs">
@@ -62,6 +63,10 @@
     <Compile Include="Migrations\202405260940377_updateOrderTable.Designer.cs">
       <DependentUpon>202405260940377_updateOrderTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202405262111496_TokenDb.cs" />
+    <Compile Include="Migrations\202405262111496_TokenDb.Designer.cs">
+      <DependentUpon>202405262111496_TokenDb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CartItem.cs" />
@@ -70,6 +75,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Token.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repos\CartItemRepo.cs" />
@@ -80,6 +86,7 @@
     <Compile Include="Repos\OrderRepo.cs" />
     <Compile Include="Repos\ProductRepo.cs" />
     <Compile Include="Repos\Repo.cs" />
+    <Compile Include="Repos\TokenRepo.cs" />
     <Compile Include="Repos\UserRepo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +99,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202405260940377_updateOrderTable.resx">
       <DependentUpon>202405260940377_updateOrderTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405262111496_TokenDb.resx">
+      <DependentUpon>202405262111496_TokenDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

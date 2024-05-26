@@ -43,5 +43,13 @@ namespace DAL
         {
             return new CartItemRepo();
         }
+        public static IRepo<Token, string, Token> TokenData()
+        {
+            return new TokenRepo();
+        }
+        public static IAuth<bool, string> AuthData()
+        {
+            return new UserRepo();
+        }
     }
 }

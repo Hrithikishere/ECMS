@@ -8,8 +8,18 @@ using System.Threading.Tasks;
 
 namespace DAL.Repos
 {
-    internal class UserRepo : Repo, IRepo<User, int, bool>
+    internal class UserRepo : Repo, IRepo<User, int, bool>, IAuth<bool, string>
     {
+        public bool Authenticate(string username, string password)
+        {
+            var data = db.Users.FirstOrDefault(user=> user.Email.Equals(username) && user.Password == password);
+            if (data != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public bool Create(User obj)
         {
             try
@@ -88,5 +98,10 @@ namespace DAL.Repos
             }
         }
 
+        public string UserRole(string username)
+        {
+            var role = db.Users.FirstOrDefault(u => u.Email.Equals(username)).Role;
+            return role;
+        }
     }
 }
