@@ -57,6 +57,21 @@ namespace ECMS.Controllers
         }
         
         [HttpPost]
+        [Route("api/categories/update")]
+        public HttpResponseMessage CategoriesUpdate(CategoryDTO categoryDTO)
+        {
+            try
+            {
+                var data = CategoryService.Update(categoryDTO);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+        
+        [HttpPost]
         [Route("api/categories/delete/{id}")]
         public HttpResponseMessage CategoriesDelete(int id)
         {

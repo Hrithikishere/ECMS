@@ -2,6 +2,7 @@
 using DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -13,33 +14,82 @@ namespace DAL.Repos
     {
         public bool Create(Category obj)
         {
-            db.Categories.Add(obj);
-            return db.SaveChanges() > 0;
+            try
+            {
+                db.Categories.Add(obj);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred in Database while creating category: {ex.Message}");
+                return false;
+            }
         }
 
         public bool Delete(int id)
         {
-            var ex = Read(id);
-            db.Categories.Remove(ex);
-            return db.SaveChanges() > 0;
+            try
+            {
+                var categoryToDelete = Read(id);
+                if (categoryToDelete == null) return false;
+
+                db.Categories.Remove(categoryToDelete);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while deleting category: {ex.Message}");
+                return false;
+            }
         }
 
         public List<Category> Read()
         {
-            return db.Categories.ToList();
+            try
+            {
+                return db.Categories.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while reading categories: {ex.Message}");
+                return new List<Category>();
+            }
         }
 
         public Category Read(int id)
         {
-            var data = db.Categories.Find(id);
-            return data;
+            try
+            {
+                return db.Categories.Find(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while reading category with Id {id}: {ex.Message}");
+                return null;
+            }
         }
 
         public bool Update(Category obj)
         {
-            var ex = Read(obj.Id);
-            db.Entry(ex).CurrentValues.SetValues(obj);
-            return db.SaveChanges() > 0;
+            try
+            {
+                var existingCategory = Read(obj.Id);
+                if (existingCategory == null)
+                {
+                    Console.WriteLine($"Category with Id {obj.Id} does not exist.");
+                    return false;
+                }
+
+                db.Entry(existingCategory).CurrentValues.SetValues(obj);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while updating category: {ex.Message}");
+                return false;
+            }
         }
+
+
     }
 }

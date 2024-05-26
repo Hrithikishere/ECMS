@@ -12,33 +12,82 @@ namespace DAL.Repos
     {
         public bool Create(OrderItem obj)
         {
-            db.OrderItems.Add(obj);
-            return db.SaveChanges() > 0;
+            try
+            {
+                db.OrderItems.Add(obj);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred in Database while creating order item: {ex.Message}");
+                return false;
+            }
         }
 
         public bool Delete(int id)
         {
-            var ex = Read(id);
-            db.OrderItems.Remove(ex);
-            return db.SaveChanges() > 0;
+            try
+            {
+                var orderItemToDelete = Read(id);
+                if (orderItemToDelete == null) return false;
+
+                db.OrderItems.Remove(orderItemToDelete);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while deleting order item: {ex.Message}");
+                return false;
+            }
         }
 
         public List<OrderItem> Read()
         {
-            return db.OrderItems.ToList();
+            try
+            {
+                return db.OrderItems.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while reading order items: {ex.Message}");
+                return new List<OrderItem>();
+            }
         }
 
         public OrderItem Read(int id)
         {
-            var data = db.OrderItems.Find(id);
-            return data;
+            try
+            {
+                return db.OrderItems.Find(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while reading order item with Id {id}: {ex.Message}");
+                return null;
+            }
         }
 
         public bool Update(OrderItem obj)
         {
-            var ex = Read(obj.Id);
-            db.Entry(ex).CurrentValues.SetValues(obj);
-            return db.SaveChanges() > 0;
+            try
+            {
+                var existingOrderItem = Read(obj.Id);
+                if (existingOrderItem == null)
+                {
+                    Console.WriteLine($"Order item with Id {obj.Id} does not exist.");
+                    return false;
+                }
+
+                db.Entry(existingOrderItem).CurrentValues.SetValues(obj);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while updating order item: {ex.Message}");
+                return false;
+            }
         }
+
+
     }
 }

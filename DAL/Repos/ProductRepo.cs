@@ -12,33 +12,85 @@ namespace DAL.Repos
     {
         public bool Create(Product obj)
         {
-            db.Products.Add(obj);
-            return db.SaveChanges() > 0;
+            try
+            {
+                db.Products.Add(obj);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred in Database while creating product: {ex.Message}");
+                return false;
+            }
         }
 
         public bool Delete(int id)
         {
-            var ex = Read(id);
-            db.Products.Remove(ex);
-            return db.SaveChanges() > 0;
+            try
+            {
+                var productToDelete = Read(id);
+                if (productToDelete == null)
+                {
+                    Console.WriteLine($"Product with Id {id} not found.");
+                    return false;
+                }
+
+                db.Products.Remove(productToDelete);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while deleting product: {ex.Message}");
+                return false;
+            }
         }
 
         public List<Product> Read()
         {
-            return db.Products.ToList();
+            try
+            {
+                return db.Products.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while reading products: {ex.Message}");
+                return new List<Product>();
+            }
         }
 
         public Product Read(int id)
         {
-            var data = db.Products.Find(id);
-            return data;
+            try
+            {
+                return db.Products.Find(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while reading product with Id {id}: {ex.Message}");
+                return null;
+            }
         }
 
         public bool Update(Product obj)
         {
-            var ex = Read(obj.Id);
-            db.Entry(ex).CurrentValues.SetValues(obj);
-            return db.SaveChanges() > 0;
+            try
+            {
+                var existingProduct = Read(obj.Id);
+                if (existingProduct == null)
+                {
+                    Console.WriteLine($"Product with Id {obj.Id} not found.");
+                    return false;
+                }
+
+                db.Entry(existingProduct).CurrentValues.SetValues(obj);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while updating product: {ex.Message}");
+                return false;
+            }
         }
+
     }
 }

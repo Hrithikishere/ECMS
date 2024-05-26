@@ -12,33 +12,82 @@ namespace DAL.Repos
     {
         public bool Create(InventoryLog obj)
         {
-            db.InventoryLogs.Add(obj);
-            return db.SaveChanges() > 0;
+            try
+            {
+                db.InventoryLogs.Add(obj);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred in Database while creating inventory log: {ex.Message}");
+                return false;
+            }
         }
 
         public bool Delete(int id)
         {
-            var ex = Read(id);
-            db.InventoryLogs.Remove(ex);
-            return db.SaveChanges() > 0;
+            try
+            {
+                var logToDelete = Read(id);
+                if (logToDelete == null) return false;
+
+                db.InventoryLogs.Remove(logToDelete);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while deleting inventory log: {ex.Message}");
+                return false;
+            }
         }
 
         public List<InventoryLog> Read()
         {
-            return db.InventoryLogs.ToList();
+            try
+            {
+                return db.InventoryLogs.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while reading inventory logs: {ex.Message}");
+                return new List<InventoryLog>();
+            }
         }
 
         public InventoryLog Read(int id)
         {
-            var data = db.InventoryLogs.Find(id);
-            return data;
+            try
+            {
+                return db.InventoryLogs.Find(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while reading inventory log with Id {id}: {ex.Message}");
+                return null;
+            }
         }
 
         public bool Update(InventoryLog obj)
         {
-            var ex = Read(obj.Id);
-            db.Entry(ex).CurrentValues.SetValues(obj);
-            return db.SaveChanges() > 0;
+            try
+            {
+                var existingLog = Read(obj.Id);
+                if (existingLog == null)
+                {
+                    Console.WriteLine($"Inventory log with Id {obj.Id} does not exist.");
+                    return false;
+                }
+
+                db.Entry(existingLog).CurrentValues.SetValues(obj);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while updating inventory log: {ex.Message}");
+                return false;
+            }
         }
+
+
     }
 }

@@ -12,33 +12,82 @@ namespace DAL.Repos
     {
         public bool Create(CartItem obj)
         {
-            db.CartItems.Add(obj);
-            return db.SaveChanges() > 0;
+            try
+            {
+                db.CartItems.Add(obj);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred in Database while creating cart item: {ex.Message}");
+                return false;
+            }
         }
 
         public bool Delete(int id)
         {
-            var ex = Read(id);
-            db.CartItems.Remove(ex);
-            return db.SaveChanges() > 0;
+            try
+            {
+                var cartItemToDelete = Read(id);
+                if (cartItemToDelete == null) return false;
+
+                db.CartItems.Remove(cartItemToDelete);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while deleting cart item: {ex.Message}");
+                return false;
+            }
         }
 
         public List<CartItem> Read()
         {
-            return db.CartItems.ToList();
+            try
+            {
+                return db.CartItems.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while reading cart items: {ex.Message}");
+                return new List<CartItem>();
+            }
         }
 
         public CartItem Read(int id)
         {
-            var data = db.CartItems.Find(id);
-            return data;
+            try
+            {
+                return db.CartItems.Find(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while reading cart item with Id {id}: {ex.Message}");
+                return null;
+            }
         }
 
         public bool Update(CartItem obj)
         {
-            var ex = Read(obj.Id);
-            db.Entry(ex).CurrentValues.SetValues(obj);
-            return db.SaveChanges() > 0;
+            try
+            {
+                var existingCartItem = Read(obj.Id);
+                if (existingCartItem == null)
+                {
+                    Console.WriteLine($"Cart item with Id {obj.Id} does not exist.");
+                    return false;
+                }
+
+                db.Entry(existingCartItem).CurrentValues.SetValues(obj);
+                return db.SaveChanges() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while updating cart item: {ex.Message}");
+                return false;
+            }
         }
+
+
     }
 }

@@ -61,7 +61,7 @@ namespace BLL.Services
             var mapper = new Mapper(cfg);
             var mapped = mapper.Map<Category>(categoryDTO);
 
-            var response = DataAccessFactory.CategoryData().Create(mapped);
+            var response = DataAccessFactory.CategoryData().Update(mapped);
             return response;
         }
         public static bool Delete(int Id)
