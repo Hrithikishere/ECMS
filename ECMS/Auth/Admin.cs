@@ -14,17 +14,10 @@ namespace ECMS.Auth
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             var token = actionContext.Request.Headers.Authorization;
-            if (token == null)
-            {
-                actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, new { Message = "No token supplied" });
-            }
-            else if (!AuthService.IsTokenValid(token.ToString()))
-            {
-                actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, new { Message = "Supplied token is invalid or expired" });
-            }
-            else { 
             
-                //Find user string and pass
+            if (!AuthService.IsUserAdmin(token.ToString())) {
+
+                actionContext.Response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Unauthorized, new { Message = "User is not allowed"});
             }
             base.OnAuthorization(actionContext);
         }

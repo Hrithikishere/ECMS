@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs;
 using BLL.Services;
+using ECMS.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace ECMS.Controllers
     public class UserController : ApiController
     {
         [HttpGet]
+        [Logged]
+        [Admin]
         [Route("api/users")]
         public HttpResponseMessage Users()
         {

@@ -33,22 +33,22 @@ namespace ECMS.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, new { Message = ex.Message });
             }
         }
-        /*
+        
         [HttpPost]
         [Route("api/logout")]
-        public HttpResponseMessage Login(LoginModel loginModel)
+        public HttpResponseMessage Logout(LogoutModel logoutModel)
         {
             try
             {
-                var res = AuthService.Authenticate(loginModel.Username, loginModel.Password);
-                if (res != null) {
+                var res = AuthService.Logout(logoutModel.Token);
+                if (res) {
 
-                    return Request.CreateResponse(HttpStatusCode.OK, res);
+                    return Request.CreateResponse(HttpStatusCode.OK, new { Message = "Logout Successful" });
 
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, new { Message = "User not found" });
+                    return Request.CreateResponse(HttpStatusCode.NotFound, new { Message = "Something wrong in token" });
                 }
             }
             catch (Exception ex)
@@ -56,6 +56,6 @@ namespace ECMS.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, new { Message = ex.Message });
             }
         }
-        */
+        
     }
 }

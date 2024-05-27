@@ -35,38 +35,49 @@ namespace BLL.Services
             return null;
         }
 
+        public static TokenDTO Read(string tkey)
+        {
+            var existingToken = DataAccessFactory.TokenData().Read(tkey);
+            TokenDTO tokenDTO = new TokenDTO();
+            tokenDTO.UserId = existingToken.UserId;
+            tokenDTO.CreatedAt = existingToken.CreatedAt;
+            tokenDTO.TKey = existingToken.TKey;
+            return tokenDTO;
+        }
+
         public static bool IsTokenValid(string tkey)
         {
             var existingToken = DataAccessFactory.TokenData().Read(tkey);
             if (existingToken != null && existingToken.DeletedAt == null)
             {
-
                 return true;
             }
             return false;
         }
 
-
+        public static bool IsUserAdmin(string tkey)
+        {
+            var token = DataAccessFactory.TokenData().Read(tkey);
+            var userRole = DataAccessFactory.AuthData().UserRole(token.UserId);
+            if (userRole == "Admin")
+            {
+                return true;
+            }
+            return false;
+        }
         public static bool Logout(string tkey)
         {
             var existingToken = DataAccessFactory.TokenData().Read(tkey);
-            existingToken.DeletedAt = DateTime.Now;
-            if (DataAccessFactory.TokenData().Update(existingToken) != null)
+            if (existingToken != null)
             {
-                return true;
+                existingToken.DeletedAt = DateTime.Now;
+                if (DataAccessFactory.TokenData().Update(existingToken) != null)
+                {
+                    return true;
+                }
             }
             return false;
 
-        }
-
-        public static bool IsUserAdmin(string username)
-        {
-            var user = DataAccessFactory.AuthData().UserRole(username);
-            if (username=="Admin")
-            {
-                return true;
-            }
-            return false;
         }
 
     }

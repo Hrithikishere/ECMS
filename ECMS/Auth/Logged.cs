@@ -25,7 +25,5 @@ namespace ECMS.Auth
             }
             base.OnAuthorization(actionContext);
         }
-
-        
     }
 }
