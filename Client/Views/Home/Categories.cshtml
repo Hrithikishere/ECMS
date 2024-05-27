@@ -1,21 +1,21 @@
-﻿@model List<BLL.DTOs.CategoryDTO>
+﻿@model List<Client.Models.Category>
 
 @{
     ViewBag.Title = "Categories";
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
 
-<h2>Categories</h2>
+<h2 class="text-center my-5">Categories</h2>
 
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <table class="table table-striped">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <table class="table table-hover">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Actions</th> <!-- Added column header for actions -->
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +24,7 @@
                         <tr>
                             <td>@category.Name</td>
                             <td>@category.Description</td>
-                            <td><a href="/Home/Products">Show Products</a></td> <!-- Removed extra <td> tag -->
+                            <td><a href="@Url.Action("CategoryProducts", "Home", new { id = category.Id })" class="btn btn-outline-primary btn-sm">Show Products</a></td>
                         </tr>
                     }
                 </tbody>

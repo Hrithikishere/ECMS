@@ -21,7 +21,7 @@
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
 
-            /*
+            
             //seed category
             var categories = new List<Category>
             {
@@ -78,7 +78,7 @@
             {
                 context.Products.AddOrUpdate(p => p.Name, product);
             }
-            */
+            
         }
     }
 }

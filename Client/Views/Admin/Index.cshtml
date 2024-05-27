@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="container mt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Welcome to the Dashboard!</h1>
+        <p class="lead">This is the place where everything starts.</p>
+        <hr class="my-4">
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card border-primary mb-3">
+                <div class="card-header bg-primary text-white">
+                    Manage Categories
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Add, edit, or delete categories.</p>
+                    <a href="/Admin/Categories" class="btn btn-primary">Go to Categories</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-primary mb-3">
+                <div class="card-header bg-primary text-white">
+                    Manage Products
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Add, edit, or delete products.</p>
+                    <a href="/Admin/Products" class="btn btn-primary">Go to Products</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-primary mb-3">
+                <div class="card-header bg-primary text-white">
+                    Manage Users
+                </div>
+                <div class="card-body">
+                    <p class="card-text">View and manage user accounts.</p>
+                    <a href="/Admin/Users" class="btn btn-primary">Go to Users</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-primary mb-3">
+                <div class="card-header bg-primary text-white">
+                    Manage Orders
+                </div>
+                <div class="card-body">
+                    <p class="card-text">View and manage orders.</p>
+                    <a href="/Admin/Orders" class="btn btn-primary">Go to Orders</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-primary mb-3">
+                <div class="card-header bg-primary text-white">
+                    View Reports
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Access sales and performance reports.</p>
+                    <a href="/Admin/Reports" class="btn btn-primary">View Reports</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

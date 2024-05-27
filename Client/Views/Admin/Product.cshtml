@@ -1,0 +1,24 @@
+﻿@model Client.Models.Product
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Product Details</h2>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">@Model.Name</h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text"><strong>Specification:</strong> @Model.Specification</p>
+            <p class="card-text"><strong>Description:</strong> @Model.Description</p>
+            <p class="card-text"><strong>Price:</strong> @Model.Price.ToString("C")</p>
+            <p class="card-text"><strong>Category:</strong> @Model.Category.Name</p>
+        </div>
+        <div class="card-footer text-right">
+            <a href="@Url.Action("Products", "Admin")" class="btn btn-primary">Back to Products</a>
+        </div>
+    </div>
+</div>

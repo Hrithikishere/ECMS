@@ -16,8 +16,8 @@ namespace ECMS.Controllers
     public class UserController : ApiController
     {
         [HttpGet]
-        [Logged]
-        [Admin]
+        //[Logged]
+        //[Admin]
         [Route("api/users")]
         public HttpResponseMessage Users()
         {
@@ -34,8 +34,6 @@ namespace ECMS.Controllers
 
 
         [HttpGet]
-        [Logged]
-        [Admin]
         [Route("api/users/{id}")]
         public HttpResponseMessage Users(int id)
         {

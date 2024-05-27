@@ -1,0 +1,40 @@
+﻿@model List<Client.Models.Product>
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+<h2 class="text-center my-5">Products</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Specifications</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model)
+                    {
+                        <tr>
+                            <td>@product.Name</td>
+                            <td>@product.Category.Name</td>
+                            <td>@product.Price.ToString("C")</td>
+                            <td>@product.Specification</td>
+                            <td>
+                                <a href="@Url.Action("Product", "Home", new { id = product.Id })" class="btn btn-outline-primary btn-sm">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,44 @@
 ﻿@{
     ViewBag.Title = "About";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <p>Use this area to provide additional information.</p>
-</main>
+<h2 class="text my-5">About Us</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="https://via.placeholder.com/500" class="img-fluid rounded mb-4" alt="About Us Image">
+        </div>
+        <div class="col-md-6">
+            <h3>Who We Are</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id dolor sit amet eros sollicitudin aliquet. Donec sed fringilla lorem. Sed tristique purus ac quam ultricies, vel tempor magna dictum. Phasellus in nulla ac risus faucibus efficitur. Sed nec arcu euismod, varius justo non, tempus velit.</p>
+            <h3>Our Mission</h3>
+            <p>Praesent vel nisl quis eros vehicula consectetur. Nullam et nisl eu nunc venenatis sodales. Aliquam erat volutpat. Integer convallis nulla id odio tincidunt, ac laoreet ex volutpat. Aenean in felis vitae orci ullamcorper facilisis at vel risus.</p>
+            <h3>Our Values</h3>
+            <p>Etiam efficitur orci a dignissim volutpat. Suspendisse potenti. Donec et augue et arcu bibendum dapibus at a risus. Ut quis orci vitae tortor tempor fermentum.</p>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col text-center">
+            <h3>Meet Our Team</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <img src="https://via.placeholder.com/150" class="rounded-circle mb-2" alt="Team Member">
+            <h5>John Doe</h5>
+            <p>CEO</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="https://via.placeholder.com/150" class="rounded-circle mb-2" alt="Team Member">
+            <h5>Jane Smith</h5>
+            <p>CTO</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="https://via.placeholder.com/150" class="rounded-circle mb-2" alt="Team Member">
+            <h5>Mike Johnson</h5>
+            <p>COO</p>
+        </div>
+    </div>
+</div>
