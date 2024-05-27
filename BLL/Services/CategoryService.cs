@@ -85,5 +85,20 @@ namespace BLL.Services
             return mapped;
 
         }
+        public static List<CategoryProductDTO> CategoryWithProducts()
+        {
+
+            var data = DataAccessFactory.CategoryData().Read();
+
+            var cfg = new MapperConfiguration(c =>
+            {
+                c.CreateMap<Category, CategoryProductDTO>();
+                c.CreateMap<Product, ProductDTO>();
+            });
+            var mapper = new Mapper(cfg);
+            var mapped = mapper.Map<List<CategoryProductDTO>>(data);
+            return mapped;
+
+        }
     }
 }

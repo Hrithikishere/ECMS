@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs;
 using BLL.Services;
+using ECMS.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace ECMS.Controllers
     public class OrderController : ApiController
     {
         [HttpGet]
+        [Logged]
+        [Admin]
         [Route("api/orders")]
         public HttpResponseMessage Orders()
         {
@@ -28,6 +31,8 @@ namespace ECMS.Controllers
         
         [HttpGet]
         [Route("api/orders/{id}")]
+        [Logged]
+        [Admin]
         public HttpResponseMessage Orders(int id)
         {
             try
@@ -43,6 +48,7 @@ namespace ECMS.Controllers
 
         [HttpPost]
         [Route("api/orders/create")]
+        [Logged]
         public HttpResponseMessage Orders(OrderOrderItemsDTO orderOrderItemsDTO)
         {
             try
@@ -58,7 +64,11 @@ namespace ECMS.Controllers
         }
 
         [HttpPost]
+        [Admin]
+        [Logged]
+
         [Route("api/orders/update")]
+
         public HttpResponseMessage OrderUpdate(OrderOrderItemsDTO orderOrderItemsDTO)
         {
             try
@@ -74,6 +84,7 @@ namespace ECMS.Controllers
         }
 
         [HttpGet]
+        [Logged]
         [Route("api/orders/orderitems")]
         public HttpResponseMessage OrdersWithOrderItems()
         {
@@ -90,6 +101,8 @@ namespace ECMS.Controllers
         }
         
         [HttpGet]
+        [Logged]
+
         [Route("api/orders/orderitems/{id}")]
         public HttpResponseMessage OrdersWithOrderItems(int id)
         {

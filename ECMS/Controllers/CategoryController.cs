@@ -13,7 +13,6 @@ namespace ECMS.Controllers
     public class CategoryController : ApiController
     {
         [HttpGet]
-        [Logged]
         [Route("api/categories")]
         public HttpResponseMessage Categories()
         {
@@ -44,6 +43,8 @@ namespace ECMS.Controllers
         }
         
         [HttpPost]
+        [Admin]
+        [Logged]
         [Route("api/categories/create")]
         public HttpResponseMessage Categories(CategoryDTO categoryDTO)
         {
@@ -59,6 +60,8 @@ namespace ECMS.Controllers
         }
         
         [HttpPost]
+        [Admin]
+        [Logged]
         [Route("api/categories/update")]
         public HttpResponseMessage CategoriesUpdate(CategoryDTO categoryDTO)
         {
@@ -74,6 +77,8 @@ namespace ECMS.Controllers
         }
         
         [HttpPost]
+        [Admin]
+        [Logged]
         [Route("api/categories/delete/{id}")]
         public HttpResponseMessage CategoriesDelete(int id)
         {
@@ -88,6 +93,21 @@ namespace ECMS.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("api/categories/products")]
+        public HttpResponseMessage CategoriesWithProducts()
+        {
+            try
+            {
+                var data = CategoryService.CategoryWithProducts();
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new {Message = ex.Message});
+            }
+        }
 
         [HttpGet]
         [Route("api/categories/products/{id}")]

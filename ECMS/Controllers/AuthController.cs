@@ -1,4 +1,5 @@
 ﻿using BLL.Services;
+using ECMS.Auth;
 using ECMS.Models;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace ECMS.Controllers
         }
         
         [HttpPost]
+        [Logged]
         [Route("api/logout")]
         public HttpResponseMessage Logout(LogoutModel logoutModel)
         {

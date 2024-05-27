@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs;
 using BLL.Services;
+using ECMS.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace ECMS.Controllers
     public class InventoryLogController : ApiController
     {
         [HttpGet]
+        [Admin]
+        [Logged]
         [Route("api/inventorylogs")]
         public HttpResponseMessage InventoryLogs()
         {
@@ -27,6 +30,8 @@ namespace ECMS.Controllers
         }
 
         [HttpGet]
+        [Admin]
+        [Logged]
         [Route("api/inventorylogs/{id}")]
         public HttpResponseMessage InventoryLogs(int id)
         {
@@ -42,6 +47,8 @@ namespace ECMS.Controllers
         }
 
         [HttpPost]
+        [Admin]
+        [Logged]
         [Route("api/inventorylogs/create")]
         public HttpResponseMessage InventoryLogs(InventoryLogDTO inventoryLogDTO)
         {
@@ -57,6 +64,8 @@ namespace ECMS.Controllers
         }
         
         [HttpPost]
+        [Admin]
+        [Logged]
         [Route("api/inventorylogs/update")]
         public HttpResponseMessage InventoryLogsUpdate(InventoryLogDTO inventoryLogDTO)
         {
@@ -72,6 +81,8 @@ namespace ECMS.Controllers
         }
 
         [HttpPost]
+        [Admin]
+        [Logged]
         [Route("api/inventorylogs/delete/{id}")]
         public HttpResponseMessage InventoryLogsDelete(int id)
         {

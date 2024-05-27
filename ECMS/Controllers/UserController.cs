@@ -32,7 +32,10 @@ namespace ECMS.Controllers
             }
         }
 
+
         [HttpGet]
+        [Logged]
+        [Admin]
         [Route("api/users/{id}")]
         public HttpResponseMessage Users(int id)
         {
@@ -48,6 +51,8 @@ namespace ECMS.Controllers
         }
 
         [HttpPost]
+        [Logged]
+        [Admin]
         [Route("api/users/create")]
         public HttpResponseMessage Users(UserDTO userDTO)
         {
@@ -63,6 +68,8 @@ namespace ECMS.Controllers
         }
 
         [HttpPost]
+        [Logged]
+        [Admin]
         [Route("api/users/update")]
         public HttpResponseMessage UsersUpdate(UserDTO userDTO)
         {
@@ -78,6 +85,8 @@ namespace ECMS.Controllers
         }
 
         [HttpPost]
+        [Logged]
+        [Admin]
         [Route("api/users/delete/{id}")]
         public HttpResponseMessage UsersDelete(int id)
         {
@@ -93,6 +102,7 @@ namespace ECMS.Controllers
         }
 
         [HttpGet]
+        [Logged]
         [Route("api/users/orderitems")]
         public HttpResponseMessage UsersWithOrderItems()
         {
@@ -108,6 +118,7 @@ namespace ECMS.Controllers
         }
 
         [HttpGet]
+        [Logged]
         [Route("api/users/orderitems/{id}")]
         public HttpResponseMessage UsersWithOrderItems(int id)
         {
@@ -123,6 +134,8 @@ namespace ECMS.Controllers
         }
 
         [HttpGet]
+        [Logged]
+
         [Route("api/users/cartitems")]
         public HttpResponseMessage UsersWithCartItems()
         {
@@ -138,6 +151,8 @@ namespace ECMS.Controllers
         }
 
         [HttpGet]
+        [Logged]
+
         [Route("api/users/cartitems/{id}")]
         public HttpResponseMessage UsersWithCartItems(int id)
         {

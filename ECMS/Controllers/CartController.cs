@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs;
 using BLL.Services;
+using ECMS.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
