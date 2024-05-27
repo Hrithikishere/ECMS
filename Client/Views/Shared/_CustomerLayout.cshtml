@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section navCustomer {
+    <ul class="navbar-nav flex-grow-1">
+        <li>@Html.ActionLink("Customer Dashboard", "Index", "Customer", new { area = "" }, new { @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Order History", "Orders", "Customer", new { area = "" }, new { @class = "nav-link" })</li>
+    </ul>
+}
+
+<div class="customer-container">
+    @RenderBody()
+</div>

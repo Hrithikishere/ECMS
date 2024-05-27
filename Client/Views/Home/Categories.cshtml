@@ -1,0 +1,34 @@
+﻿@model List<BLL.DTOs.CategoryDTO>
+
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+<h2>Categories</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Actions</th> <!-- Added column header for actions -->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var category in Model)
+                    {
+                        <tr>
+                            <td>@category.Name</td>
+                            <td>@category.Description</td>
+                            <td><a href="/Home/Products">Show Products</a></td> <!-- Removed extra <td> tag -->
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
