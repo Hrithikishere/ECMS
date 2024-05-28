@@ -226,6 +226,11 @@
     <Content Include="Views\Admin\Product.cshtml" />
     <Content Include="Views\Admin\CategoryProducts.cshtml" />
     <Content Include="Views\Admin\Customers.cshtml" />
+    <Content Include="Views\Admin\Customer.cshtml" />
+    <Content Include="Views\Admin\OrderProducts.cshtml" />
+    <Content Include="Views\Admin\Orders.cshtml" />
+    <Content Include="Views\Admin\AddCategory.cshtml" />
+    <Content Include="Views\Admin\UpdateCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,26 @@
+﻿@model Client.Models.User
+@{
+    ViewBag.Title = "Customer";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Customer Details</h2>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">@Model.FirstName,</h3>
+        </div>
+        <div class="card-body">
+            <p class="card-text"><strong>Full Name:</strong> @Model.FirstName @Model.LastName</p>
+            <p class="card-text"><strong>Email:</strong> @Model.Email</p>
+            <p class="card-text"><strong>Address:</strong> @Model.Address</p>
+            <p class="card-text"><strong>JoinDate:</strong> @Model.JoinDate</p>
+            <p class="card-text"><strong>Phone:</strong> @Model.Phone</p>
+        </div>
+        <div class="card-footer text-right">
+            <a href="@Url.Action("Users", "Admin")" class="btn btn-secondary">Back to Products</a>
+        </div>
+    </div>
+</div>
+
+

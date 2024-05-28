@@ -13,8 +13,8 @@ namespace ECMS.Controllers
     public class OrderController : ApiController
     {
         [HttpGet]
-        [Logged]
-        [Admin]
+        //[Logged]
+        //[Admin]
         [Route("api/orders")]
         public HttpResponseMessage Orders()
         {
@@ -31,8 +31,8 @@ namespace ECMS.Controllers
         
         [HttpGet]
         [Route("api/orders/{id}")]
-        [Logged]
-        [Admin]
+        //[Logged]
+        //[Admin]
         public HttpResponseMessage Orders(int id)
         {
             try
@@ -48,7 +48,7 @@ namespace ECMS.Controllers
 
         [HttpPost]
         [Route("api/orders/create")]
-        [Logged]
+        //[Logged]
         public HttpResponseMessage Orders(OrderOrderItemsDTO orderOrderItemsDTO)
         {
             try
@@ -64,8 +64,8 @@ namespace ECMS.Controllers
         }
 
         [HttpPost]
-        [Admin]
-        [Logged]
+        //[Admin]
+        //[Logged]
 
         [Route("api/orders/update")]
 
@@ -84,7 +84,7 @@ namespace ECMS.Controllers
         }
 
         [HttpGet]
-        [Logged]
+        //[Logged]
         [Route("api/orders/orderitems")]
         public HttpResponseMessage OrdersWithOrderItems()
         {
@@ -101,7 +101,7 @@ namespace ECMS.Controllers
         }
         
         [HttpGet]
-        [Logged]
+        //[Logged]
 
         [Route("api/orders/orderitems/{id}")]
         public HttpResponseMessage OrdersWithOrderItems(int id)

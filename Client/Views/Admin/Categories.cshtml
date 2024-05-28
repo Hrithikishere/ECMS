@@ -31,8 +31,8 @@
                                 <td>@category.Description</td>
                                 <td>
                                     <a href="@Url.Action("CategoryProducts", "Admin", new { id = category.Id })" class="btn btn-outline-primary btn-sm mr-1">Products</a>
-                                    <a href="@Url.Action("UpdateProduct", "Admin", new { id = category.Id })" class="btn btn-outline-warning btn-sm mr-1">Edit</a>
-                                    <a href="@Url.Action("DeleteProduct", "Admin", new { id = category.Id })" class="btn btn-outline-danger btn-sm">Delete</a>
+                                    <a href="@Url.Action("UpdateCategory", "Admin", new { id = category.Id })" class="btn btn-outline-warning btn-sm mr-1">Edit</a>
+                                    <a href="@Url.Action("DeleteCategory", "Admin", new { id = category.Id })" class="btn btn-outline-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
                         }

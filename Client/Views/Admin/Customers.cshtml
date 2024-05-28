@@ -32,7 +32,7 @@
                                 <td>@customer.Email</td>
                                 <td>@customer.Phone</td>
                                 <td>
-                                    <a href="@Url.Action("CategoryProducts", "Admin", new { id = customer.Id })" class="btn btn-outline-primary btn-sm mr-1">Details</a>
+                                    <a href="@Url.Action("Customer", "Admin", new { id = customer.Id })" class="btn btn-outline-primary btn-sm mr-1">Details</a>
                                     <a href="@Url.Action("UpdateProduct", "Admin", new { id = customer.Id })" class="btn btn-outline-warning btn-sm mr-1">Edit</a>
                                     <a href="@Url.Action("DeleteProduct", "Admin", new { id = customer.Id })" class="btn btn-outline-danger btn-sm">Delete</a>
                                 </td>

@@ -43,8 +43,8 @@ namespace ECMS.Controllers
         }
         
         [HttpPost]
-        [Admin]
-        [Logged]
+        //[Admin]
+        //[Logged]
         [Route("api/categories/create")]
         public HttpResponseMessage Categories(CategoryDTO categoryDTO)
         {
@@ -60,8 +60,8 @@ namespace ECMS.Controllers
         }
         
         [HttpPost]
-        [Admin]
-        [Logged]
+        //[Admin]
+        //[Logged]
         [Route("api/categories/update")]
         public HttpResponseMessage CategoriesUpdate(CategoryDTO categoryDTO)
         {
@@ -76,9 +76,9 @@ namespace ECMS.Controllers
             }
         }
         
-        [HttpPost]
-        [Admin]
-        [Logged]
+        [HttpDelete]
+        //[Admin]
+        //[Logged]
         [Route("api/categories/delete/{id}")]
         public HttpResponseMessage CategoriesDelete(int id)
         {

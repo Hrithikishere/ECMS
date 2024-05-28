@@ -1,0 +1,49 @@
+﻿@model Client.Models.Order
+
+@{
+    ViewBag.Title = "OrderProducts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Order Details - Order #@Model.Id</h2>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Order Date: @Model.OrderDate.ToString("dd MMM yyyy")</h3>
+            <br />
+            <p class="card-text"><strong>Status:</strong> @Model.Status</p>
+            <p class="card-text"><strong>Total Amount:</strong> $@Model.TotalAmount</p>
+            <p class="card-text"><strong>Shipping Address:</strong> @Model.ShippingAddress</p>
+            <p class="card-text"><strong>Billing Address:</strong> @Model.BillingAddress</p>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Ordered Items</h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Unit Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderItems)
+                        {
+                            <tr>
+                                <td>@item.Product.Name</td>
+                                <td>$@item.UnitPrice</td>
+                                <td>@item.Quantity</td>
+                                <td>$@item.TotalPrice</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <a href="@Url.Action("Orders", "Admin")" class="btn btn-secondary">Back to Orders</a>
+        </div>
+    </div>
+</div>

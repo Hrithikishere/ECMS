@@ -1,0 +1,46 @@
+﻿@model List<Client.Models.Order>
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-center my-5">Orders</h2>
+<div class="d-flex justify-content-end mb-3">
+    <a href="@Url.Action("AddOrder", "Admin")" class="btn btn-primary">Add New Order</a>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Customer</th>
+                        <th scope="col">Total Amount</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.Id</td>
+                            <td>@order.User.LastName</td>
+                            <td>@order.TotalAmount.ToString("C")</td>
+                            <td>@order.OrderDate</td>
+                            <td>@order.Status</td>
+                            <td>
+                                <a href="@Url.Action("OrderProducts", "Admin", new { id = order.Id })" class="btn btn-outline-primary btn-sm">Details</a>
+                                <a href="@Url.Action("Product", "Admin", new { id = order.Id })" class="btn btn-outline-warning btn-sm">Edit</a>
+                                <a href="@Url.Action("Product", "Admin", new { id = order.Id })" class="btn btn-outline-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
