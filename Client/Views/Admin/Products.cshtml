@@ -7,7 +7,7 @@
 
 <h2 class="text-center my-5">Products</h2>
 <div class="d-flex justify-content-end mb-3">
-    <a href="@Url.Action("AddProducts", "Admin")" class="btn btn-primary">Add New Product</a>
+    <a href="@Url.Action("AddProduct", "Admin")" class="btn btn-primary">Add New Product</a>
 </div>
 <div class="container">
     <div class="row justify-content-center">
@@ -32,8 +32,8 @@
                             <td>@product.Specification</td>
                             <td>
                                 <a href="@Url.Action("Product", "Admin", new { id = product.Id })" class="btn btn-outline-primary btn-sm">Details</a>
-                                <a href="@Url.Action("Product", "Admin", new { id = product.Id })" class="btn btn-outline-warning btn-sm">Edit</a>
-                                <a href="@Url.Action("Product", "Admin", new { id = product.Id })" class="btn btn-outline-danger btn-sm">Delete</a>
+                                <a href="@Url.Action("UpdateProduct", "Admin", new { id = product.Id })" class="btn btn-outline-warning btn-sm">Edit</a>
+                                <a href="@Url.Action("DeleteProduct", "Admin", new { id = product.Id })" class="btn btn-outline-danger btn-sm">Delete</a>
                             </td>
                         </tr>
                     }

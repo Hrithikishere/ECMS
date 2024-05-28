@@ -81,8 +81,13 @@ namespace DAL.Repos
                     Console.WriteLine($"Product with Id {obj.Id} not found.");
                     return false;
                 }
-
-                db.Entry(existingProduct).CurrentValues.SetValues(obj);
+                existingProduct.Name = obj.Name;
+                existingProduct.Description = obj.Description;
+                existingProduct.Specification = obj.Specification;
+                existingProduct.CategoryId = obj.CategoryId;
+                existingProduct.ModifiedTime = obj.ModifiedTime;
+                existingProduct.Price = obj.Price;
+                //db.Entry(existingProduct).CurrentValues.SetValues(obj);
                 return db.SaveChanges() > 0;
             }
             catch (Exception ex)

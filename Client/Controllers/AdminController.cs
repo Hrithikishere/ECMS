@@ -38,6 +38,7 @@ namespace Client.Controllers
         [HttpGet]
         public ActionResult AddCategory()
         {
+
             return View();
         }
 
@@ -134,20 +135,23 @@ namespace Client.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddCategory()
+        public async Task<ActionResult> AddProduct()
         {
+            ViewBag.Categories = await _apiService.GetAsync<List<Category>>("categories");
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddCategory(Category category)
+        public async Task<ActionResult> AddProduct(Product product)
         {
+            ViewBag.Categories = await _apiService.GetAsync<List<Category>>("categories");
+
             if (ModelState.IsValid)
             {
-                var success = await _apiService.PostAsync("categories/create", category);
+                var success = await _apiService.PostAsync("products/create", product);
                 if (success)
                 {
-                    return RedirectToAction("Categories", "Admin");
+                    return RedirectToAction("Products", "Admin");
                 }
                 else
                 {
@@ -155,42 +159,49 @@ namespace Client.Controllers
                 }
             }
 
-            return View(category);
+            return View(product);
         }
 
 
         [HttpGet]
-        public async Task<ActionResult> UpdateCategory(int id)
+        public async Task<ActionResult> UpdateProduct(int id)
         {
-            var category = await _apiService.GetAsync<Category>($"categories/{id}");
-            return View(category);
+            ViewBag.Categories = await _apiService.GetAsync<List<Category>>("categories");
+
+            var product = await _apiService.GetAsync<Product>($"products/{id}");
+            int categoryId = product.CategoryId;
+            product.Category = await _apiService.GetAsync<Category>($"categories/{categoryId}");
+
+            return View(product);
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpdateCategory(Category category)
+        public async Task<ActionResult> UpdateProduct(Product product)
         {
+            ViewBag.Categories = await _apiService.GetAsync<List<Category>>("categories");
+
             if (ModelState.IsValid)
             {
-                var success = await _apiService.PostAsync("categories/update", category);
+                var success = await _apiService.PostAsync("products/update", product);
                 if (success)
                 {
-                    return RedirectToAction("Categories", "Admin");
+                    return RedirectToAction("Products", "Admin");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Failed to create category.");
+                    ModelState.AddModelError("", "Failed to update product.");
                 }
             }
 
-            return View(category);
+            return View(product);
         }
 
-        public async Task<ActionResult> DeleteCategory(int id)
+        public async Task<ActionResult> DeleteProduct(int id)
         {
-            var success = await _apiService.DeleteAsync($"categories/delete/{id}");
+            var success = await _apiService.DeleteAsync($"products/delete/{id}");
             if (success)
             {
-                return RedirectToAction("Categories", "Admin");
+                return RedirectToAction("Products", "Admin");
             }
             else
             {

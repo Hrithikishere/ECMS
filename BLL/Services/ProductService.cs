@@ -46,7 +46,8 @@ namespace BLL.Services
             });
             var mapper = new Mapper(cfg);
             var mapped = mapper.Map<Product>(productDTO);
-
+            mapped.CreatedTime = DateTime.Now;
+            mapped.ModifiedTime = DateTime.Now;
             var response = DataAccessFactory.ProductData().Create(mapped);
             return response;
         }
@@ -59,7 +60,7 @@ namespace BLL.Services
             });
             var mapper = new Mapper(cfg);
             var mapped = mapper.Map<Product>(productDTO);
-
+            mapped.ModifiedTime = DateTime.Now;
             var response = DataAccessFactory.ProductData().Update(mapped);
             return response;
         }

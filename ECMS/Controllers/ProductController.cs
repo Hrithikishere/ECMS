@@ -43,8 +43,8 @@ namespace ECMS.Controllers
         }
 
         [HttpPost]
-        [Logged]
-        [Admin]
+        //[Logged]
+        //[Admin]
         [Route("api/products/create")]
         public HttpResponseMessage Products(ProductDTO productDTO)
         {
@@ -60,8 +60,8 @@ namespace ECMS.Controllers
         }
         
         [HttpPost]
-        [Logged]
-        [Admin]
+        //[Logged]
+        //[Admin]
         [Route("api/products/update")]
         public HttpResponseMessage ProductsUpdate(ProductDTO productDTO)
         {
@@ -76,9 +76,9 @@ namespace ECMS.Controllers
             }
         }
 
-        [HttpPost]
-        [Logged]
-        [Admin]
+        [HttpDelete]
+        //[Logged]
+        //[Admin]
         [Route("api/products/delete/{id}")]
         public HttpResponseMessage ProductsDelete(int id)
         {
@@ -94,8 +94,8 @@ namespace ECMS.Controllers
         }
 
         [HttpGet]
-        [Logged]
-        [Admin]
+        //[Logged]
+        //[Admin]
         [Route("api/products/inventorylogs")]
         public HttpResponseMessage ProductsWithInventoryLogs()
         {
@@ -126,8 +126,8 @@ namespace ECMS.Controllers
         }
 
         [HttpGet]
-        [Logged]
-        [Admin]
+        //[Logged]
+        //[Admin]
         [Route("api/products/orderitems")]
         public HttpResponseMessage ProductsWithOrderItems()
         {
@@ -143,8 +143,8 @@ namespace ECMS.Controllers
         }
 
         [HttpGet]
-        [Logged]
-        [Admin]
+        //[Logged]
+        //[Admin]
         [Route("api/products/orderitems/{id}")]
         public HttpResponseMessage ProductsWithOrderItems(int id)
         {
