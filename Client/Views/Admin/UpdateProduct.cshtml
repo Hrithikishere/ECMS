@@ -59,6 +59,18 @@
 
                         </div>
 
+                        <div class="form-group mb-3">
+                            <label for="Stock" class="form-label">Stock</label>
+                            <input type="number" class="form-control" id="Stock" name="Stock" placeholder="Enter Product Stock" step="1" value="@Model.Stock" />
+                            <small>@Html.ValidationMessage("Stock", "", new { @class = "text-danger" })</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="ImageFile" class="form-label">Upload Image</label>
+                            <input type="file" class="form-control" id="ImageFile" name="ImageFile" value="@Model.ImagePath" placeholder="@Model.ImagePath"/>
+                            <small>@Html.ValidationMessage("ImageFile", "", new { @class = "text-danger" })</small>
+                        </div>
+
                         <div class="form-group">
                             <input type="submit" value="Update" class="btn btn-primary" />
                         </div>

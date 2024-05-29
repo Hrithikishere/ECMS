@@ -14,17 +14,36 @@ namespace Client.Services
     public class ApiService
     {
         private readonly HttpClient _httpClient;
+        private string _authToken;
 
         public ApiService()
         {
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://localhost:44353/api/"); // Replace with your API base address
+            _httpClient.BaseAddress = new Uri("https://localhost:44353/api/");
             _httpClient.DefaultRequestHeaders.Accept.Clear();
-            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        public void SetAuthToken(string token)
+        {
+            _authToken = token;
+        }
+
+        private void AddAuthorizationHeader()
+        {
+            if (!string.IsNullOrEmpty(_authToken))
+            {
+                if (_httpClient.DefaultRequestHeaders.Contains("Authorization"))
+                {
+                    _httpClient.DefaultRequestHeaders.Remove("Authorization");
+                }
+                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_authToken}");
+            }
         }
 
         public async Task<T> GetAsync<T>(string endpoint)
         {
+            AddAuthorizationHeader();
             HttpResponseMessage response = await _httpClient.GetAsync(endpoint);
             if (response.IsSuccessStatusCode)
             {
@@ -38,33 +57,22 @@ namespace Client.Services
 
         public async Task<bool> PostAsync<TData>(string endpoint, TData data)
         {
+            AddAuthorizationHeader();
             var jsonContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(endpoint, jsonContent);
-            if (response.IsSuccessStatusCode)
-            {
-                return true; 
-            }
-            else
-            {
-                return false; 
-            }
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> DeleteAsync(string endpoint)
         {
+            AddAuthorizationHeader();
             var response = await _httpClient.DeleteAsync(endpoint);
-            if (response.IsSuccessStatusCode)
-            {
-                return true; // Return true upon successful deletion
-            }
-            else
-            {
-                return false; // Return false if deletion fails
-            }
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<TResponse> PostAsync<TResponse, TData>(string endpoint, TData data)
         {
+            AddAuthorizationHeader();
             var jsonContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync(endpoint, jsonContent);
             if (response.IsSuccessStatusCode)
@@ -90,7 +98,5 @@ namespace Client.Services
                 throw new Exception($"API request failed with status code {response.StatusCode}");
             }
         }
-
-
     }
 }

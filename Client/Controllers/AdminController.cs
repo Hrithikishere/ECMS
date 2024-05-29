@@ -2,10 +2,13 @@
 using Client.Services;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace Client.Controllers
 {
@@ -18,52 +21,122 @@ namespace Client.Controllers
         }
         public ActionResult Index()
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return View();
         }
 
         //Categories -------------------------------------
         public async Task<ActionResult> Categories()
         {
-            var categories = await _apiService.GetAsync<List<Category>>("categories");
-            return View(categories);
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            try
+            {
+                var categories = await _apiService.GetAsync<List<Category>>("categories");
+                return View(categories);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "An error occurred while fetching the categories. Please try again later.";
+                return View(new List<Category>());
+            }
+
         }
 
         public async Task<ActionResult> Category(int id)
         {
-            var category = await _apiService.GetAsync<Category>($"categories/{id}");
-            return View(category);
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            try
+            {
+                var category = await _apiService.GetAsync<Category>($"categories/{id}");
+                return View(category);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "An error occurred while fetching the category. Please try again later.";
+                return View(new Category());
+            }
         }
 
-        
+
         [HttpGet]
-        public ActionResult AddCategory()
+        public async Task<ActionResult> AddCategory()
         {
-            return View();
+            try
+            {
+                var token = Session["AuthToken"]?.ToString();
+                if (string.IsNullOrEmpty(token))
+                {
+                    return RedirectToAction("Login", "Login");
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "An error occurred while loading the add category page.";
+                return View();
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult> AddCategory(Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var success = await _apiService.PostAsync("categories/create", category);
-                if (success)
+                var token = Session["AuthToken"]?.ToString();
+                if (string.IsNullOrEmpty(token))
                 {
-                    return RedirectToAction("Categories", "Admin");
+                    return RedirectToAction("Login", "Login");
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Failed to create category.");
-                }
-            }
 
-            return View(category);
+                if (ModelState.IsValid)
+                {
+                    var success = await _apiService.PostAsync("categories/create", category);
+                    if (success)
+                    {
+                        return RedirectToAction("Categories", "Admin");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Failed to create category.");
+                    }
+                }
+
+                return View(category);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "An error occurred while adding the category.";
+                return View(category);
+            }
         }
+
 
 
         [HttpGet]
         public async Task<ActionResult> UpdateCategory(int id)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var category = await _apiService.GetAsync<Category>($"categories/{id}");
             return View(category);
         }
@@ -71,6 +144,12 @@ namespace Client.Controllers
         [HttpPost]
         public async Task<ActionResult> UpdateCategory(Category category)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             if (ModelState.IsValid)
             {
                 var success = await _apiService.PostAsync("categories/update", category);
@@ -89,6 +168,12 @@ namespace Client.Controllers
 
         public async Task<ActionResult> DeleteCategory(int id)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var success = await _apiService.DeleteAsync($"categories/delete/{id}");
             if (success)
             {
@@ -104,6 +189,12 @@ namespace Client.Controllers
 
         public async Task<ActionResult> CategoryProducts(int id)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var data = await _apiService.GetAsync<Category>($"categories/products/{id}");
             return View(data);
         }
@@ -116,6 +207,12 @@ namespace Client.Controllers
 
         public async Task<ActionResult> Products()
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var data = await _apiService.GetAsync<List<Product>>("products");
             foreach (var product in data)
             {
@@ -126,6 +223,12 @@ namespace Client.Controllers
         }
         public async Task<ActionResult> Product(int id)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var data = await _apiService.GetAsync<Product>($"products/{id}");
             int categoryId = data.CategoryId;
             data.Category = await _apiService.GetAsync<Category>($"categories/{categoryId}");
@@ -136,18 +239,50 @@ namespace Client.Controllers
         [HttpGet]
         public async Task<ActionResult> AddProduct()
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             ViewBag.Categories = await _apiService.GetAsync<List<Category>>("categories");
             return View();
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddProduct(Product product)
+        public async Task<ActionResult> AddProduct(Product product, HttpPostedFileBase ImageFile)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             ViewBag.Categories = await _apiService.GetAsync<List<Category>>("categories");
 
             if (ModelState.IsValid)
             {
+                if (ImageFile != null && ImageFile.ContentLength > 0)
+                {
+                    string originalFilePath = ImageFile.FileName;
+
+                    string directoryPath = Server.MapPath("~/Assets/Images/");
+
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(originalFilePath);
+
+                    string filePath = Path.Combine(directoryPath, fileName);
+                    ImageFile.SaveAs(filePath);
+
+                    product.ImagePath = "Assets/Images/" + fileName;
+                }
+
                 var success = await _apiService.PostAsync("products/create", product);
+
                 if (success)
                 {
                     return RedirectToAction("Products", "Admin");
@@ -165,6 +300,12 @@ namespace Client.Controllers
         [HttpGet]
         public async Task<ActionResult> UpdateProduct(int id)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             ViewBag.Categories = await _apiService.GetAsync<List<Category>>("categories");
 
             var product = await _apiService.GetAsync<Product>($"products/{id}");
@@ -175,13 +316,39 @@ namespace Client.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpdateProduct(Product product)
+        public async Task<ActionResult> UpdateProduct(Product product, HttpPostedFileBase ImageFile)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             ViewBag.Categories = await _apiService.GetAsync<List<Category>>("categories");
 
             if (ModelState.IsValid)
             {
+                if (ImageFile != null && ImageFile.ContentLength > 0)
+                {
+                    string originalFilePath = ImageFile.FileName;
+
+                    string directoryPath = Server.MapPath("~/Assets/Images/");
+
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(originalFilePath);
+
+                    string filePath = Path.Combine(directoryPath, fileName);
+                    ImageFile.SaveAs(filePath);
+
+                    product.ImagePath = "Assets/Images/" + fileName;
+                }
+
                 var success = await _apiService.PostAsync("products/update", product);
+
                 if (success)
                 {
                     return RedirectToAction("Products", "Admin");
@@ -197,6 +364,12 @@ namespace Client.Controllers
 
         public async Task<ActionResult> DeleteProduct(int id)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var success = await _apiService.DeleteAsync($"products/delete/{id}");
             if (success)
             {
@@ -215,6 +388,12 @@ namespace Client.Controllers
 
         public async Task<ActionResult> Customers()
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var data = await _apiService.GetAsync<List<User>>("users");
             var customerUsers = data.Where(user => user.Role == "Customer").ToList();
             return View(customerUsers);
@@ -222,20 +401,38 @@ namespace Client.Controllers
         
         public async Task<ActionResult> Customer(int id)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var data = await _apiService.GetAsync<User>($"users/{id}");
             return View(data);
         }
 
-
+        /*
         [HttpGet]
         public ActionResult AddCustomer()
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return View();
         }
 
         [HttpPost]
         public async Task<ActionResult> AddCustomer(User user)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             if (ModelState.IsValid)
             {
                 user.Role = "Customer";
@@ -253,11 +450,17 @@ namespace Client.Controllers
 
             return View(user);
         }
-
+        */
 
         [HttpGet]
         public async Task<ActionResult> UpdateCustomer(int id)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var user = await _apiService.GetAsync<User>($"users/{id}");
 
             return View(user);
@@ -266,6 +469,12 @@ namespace Client.Controllers
         [HttpPost]
         public async Task<ActionResult> UpdateCustomer(User user)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             if (ModelState.IsValid)
             {
                 var success = await _apiService.PostAsync("users/update", user);
@@ -284,6 +493,12 @@ namespace Client.Controllers
 
         public async Task<ActionResult> DeleteCustomer(int id)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var success = await _apiService.DeleteAsync($"users/delete/{id}");
             if (success)
             {
@@ -303,6 +518,12 @@ namespace Client.Controllers
 
         public async Task<ActionResult> Orders()
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var data = await _apiService.GetAsync<List<Order>>("orders");
             foreach (var order in data)
             {
@@ -314,6 +535,30 @@ namespace Client.Controllers
  
         public async Task<ActionResult> OrderProducts(int id)
         {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            var data = await _apiService.GetAsync<Order>($"orders/orderitems/{id}");
+            foreach (var order in data.OrderItems)
+            {
+                order.Product = await _apiService.GetAsync<Product>($"products/{order.ProductId}");
+            }
+
+            return View(data);
+        }
+        
+        public async Task<ActionResult> EditOrder(int id)
+        {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            ViewBag.Status = new List<string> { "Placed", "Processing", "Delivered" };
             var data = await _apiService.GetAsync<Order>($"orders/orderitems/{id}");
             foreach (var order in data.OrderItems)
             {
@@ -323,11 +568,54 @@ namespace Client.Controllers
             return View(data);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> EditOrder(FormCollection formCollection)
+        {
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            ViewBag.Status = new List<string> { "Placed", "Processing", "Delivered" };
+            var data = await _apiService.GetAsync<Order>($"orders/orderitems/{formCollection["OrderId"]}");
+            data.Status = formCollection["Status"];
+
+            var cleared = await _apiService.PostAsync("orders/update", data);
+            if (cleared)
+            {
+                return RedirectToAction("Orders", "Admin");
+            }
+            else
+            {
+                return View(data);
+            }
+        }
+
         //Logout ------------------------------------------
 
-        public ActionResult Logout()
+        public async Task<ActionResult> Logout()
         {
-            return RedirectToAction("Index", "Admin");
+            var token = Session["AuthToken"]?.ToString();
+            if (string.IsNullOrEmpty(token))
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            LogoutModel logoutModel = new LogoutModel();
+            logoutModel.Token = Session["AuthToken"].ToString();
+
+            var success = await _apiService.PostAsync("logout", logoutModel);
+
+            if (success)
+            {
+                Session["AuthToken"] = null;
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Admin");
+            }
         }
     }
 }

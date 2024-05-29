@@ -1,6 +1,5 @@
 ﻿using Client.Models;
 using Client.Services;
-using ECMS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,24 +27,68 @@ namespace Client.Controllers
         {
             if (ModelState.IsValid)
             {
-                var token = await _apiService.PostAsync<Token, LoginModel>("login", loginModel);
-                if (token!=null)
+                try
                 {
-                    if(token.UserRole=="Admin")
+                    var token = await _apiService.PostAsync<Token, LoginModel>("login", loginModel);
+                    if (token != null)
                     {
-                        return RedirectToAction("Index", "Admin");
+                        Session["AuthToken"] = token.TKey;
+
+                        if (token.UserRole == "Admin")
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Customer");
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Customer");
+                        ViewBag.ErrorMessage = "Invalid username or password.";
                     }
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorMessage = "An error occurred during login. Please try again.";
+                }
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Please correct the errors and try again.";
+            }
+            return View();
+        }
+
+
+
+
+
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Register(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                user.Role = "Customer";
+                user.JoinDate = DateTime.Now;
+                var success = await _apiService.PostAsync("users/create", user);
+                if (success)
+                {
+                    return RedirectToAction("Customers", "Admin");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Error.");
+                    ModelState.AddModelError("", "Failed to create category.");
                 }
             }
-            return View();
+
+            return View(user);
         }
     }
 }

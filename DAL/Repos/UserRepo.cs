@@ -25,6 +25,16 @@ namespace DAL.Repos
             try
             {
                 db.Users.Add(obj);
+                db.SaveChanges();
+
+                Cart cart = new Cart
+                {
+                    CustomerId = obj.Id,
+                };
+
+                db.Carts.Add(cart);
+                db.SaveChanges();
+
                 return db.SaveChanges() > 0;
             }
             catch (Exception ex)

@@ -139,6 +139,16 @@ namespace DAL.Repos
                     }
                 }
 
+                if (existingOrder.Status == "Delivered")
+                {
+                    foreach (var existingItem in existingOrderItems)
+                    {
+                        var products = db.Products.Find(existingItem.ProductId);
+                        products.Stock = products.Stock - existingItem.Quantity;
+                        db.SaveChanges();
+                    }
+                }
+
                 return db.SaveChanges() > 0;
             }
             catch (Exception ex)

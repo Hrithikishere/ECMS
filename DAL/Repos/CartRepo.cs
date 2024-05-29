@@ -104,6 +104,14 @@ namespace DAL.Repos
                 var existingCartItems = existingCart.CartItems.ToList();
                 var updatedCartItems = obj.CartItems;
 
+                if(obj.CartItems.Count < 1) { 
+                
+                    foreach(var item in db.CartItems.Where(c => c.CartId == existingCart.Id)){
+                        db.CartItems.Remove(item);
+                    }
+                    db.SaveChanges();
+                }
+
                 foreach (var item in updatedCartItems)
                 {
                     var existingItem = existingCartItems.FirstOrDefault(i => i.Id == item.Id);

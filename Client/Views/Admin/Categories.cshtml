@@ -14,31 +14,45 @@
                 <a href="@Url.Action("AddCategory", "Admin")" class="btn btn-primary">Add New Category</a>
             </div>
 
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var category in Model)
-                        {
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.ErrorMessage
+                </div>
+            }
+
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
                             <tr>
-                                <td>@category.Name</td>
-                                <td>@category.Description</td>
-                                <td>
-                                    <a href="@Url.Action("CategoryProducts", "Admin", new { id = category.Id })" class="btn btn-outline-primary btn-sm mr-1">Products</a>
-                                    <a href="@Url.Action("UpdateCategory", "Admin", new { id = category.Id })" class="btn btn-outline-warning btn-sm mr-1">Edit</a>
-                                    <a href="@Url.Action("DeleteCategory", "Admin", new { id = category.Id })" class="btn btn-outline-danger btn-sm">Delete</a>
-                                </td>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Actions</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @foreach (var category in Model)
+                            {
+                                <tr>
+                                    <td>@category.Name</td>
+                                    <td>@category.Description</td>
+                                    <td>
+                                        <a href="@Url.Action("CategoryProducts", "Admin", new { id = category.Id })" class="btn btn-outline-primary btn-sm mr-1">Products</a>
+                                        <a href="@Url.Action("UpdateCategory", "Admin", new { id = category.Id })" class="btn btn-outline-warning btn-sm mr-1">Edit</a>
+                                        <a href="@Url.Action("DeleteCategory", "Admin", new { id = category.Id })" class="btn btn-outline-danger btn-sm">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No categories found.</p>
+            }
         </div>
     </div>
 </div>

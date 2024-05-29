@@ -1,17 +1,39 @@
 ﻿@model Client.Models.Order
 
 @{
-    ViewBag.Title = "OrderProducts";
-    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewBag.Title = "EditOrder";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Order Details - Order #@Model.Id</h2>
+    <h2 class="text-center mb-4">Edit Order - Order #@Model.Id</h2>
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Order Date: @Model.OrderDate.ToString("dd MMM yyyy")</h3>
             <br />
-            <p class="card-text"><strong>Status:</strong> @Model.Status</p>
+            <div class="form-group mb-3">
+                <p class="card-text"><strong>Status:</strong></p>
+
+                <form action="" method="post">
+                    <select name="Status" class="form-control">
+                        <option selected>Select a Category</option>
+                        @foreach (var status in ViewBag.Status)
+                        {
+                            if (status == Model.Status)
+                            {
+                                <option selected value="@Model.Status">@Model.Status</option>
+                            }
+                            else
+                            {
+                                <option value="@status">@status</option>
+                            }
+                        }
+                    </select>
+                    <input hidden type="text" name="OrderId" value="@Model.Id" />
+                    <small>@Html.ValidationMessage("CategoryId", "", new { @class = "text-danger" })</small>
+            </div>
+
+            
             <p class="card-text"><strong>Total Amount:</strong> $@Model.TotalAmount</p>
             <p class="card-text"><strong>Shipping Address:</strong> @Model.ShippingAddress</p>
             <p class="card-text"><strong>Billing Address:</strong> @Model.BillingAddress</p>
@@ -36,7 +58,7 @@
                                 <td>$@item.UnitPrice</td>
                                 <td>@item.Quantity</td>
                                 <td>$@item.TotalPrice</td>
-                                <td><a href="@Url.Action("Product", "Customer",new { id = item.Id })" class="btn btn-outline-secondary">View Product</a></td>
+                                <td><a href="@Url.Action("Product", "Admin", new { id = item.Id })" class="btn btn-outline-secondary">View Product</a></td>
                             </tr>
                         }
                     </tbody>
@@ -44,7 +66,9 @@
             </div>
         </div>
         <div class="card-footer text-right">
-            <a href="@Url.Action("Orders", "Customer")" class="btn btn-secondary">Back to Orders</a>
+            <button type="submit" value="Update Order" class="btn btn-success">Update Order</button>
+            <a href="@Url.Action("Orders", "Admin")" class="btn btn-secondary">Back to Orders</a>
+        </form>
         </div>
     </div>
 </div>

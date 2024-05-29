@@ -164,6 +164,7 @@
     <Compile Include="Services\ApiService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\4a0c66c3-47be-4189-a70d-9f5c0b64d2d5.jpg" />
     <Content Include="Assets\Images\5700g.jpg" />
     <Content Include="Assets\Images\a7mark3.jpg" />
     <Content Include="Assets\Images\ad80hw.jpg" />
@@ -260,6 +261,10 @@
     <Content Include="Views\Customer\Product.cshtml" />
     <Content Include="Views\Customer\OrderProducts.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Customer\Cart.cshtml" />
+    <Content Include="Views\Customer\PlaceOrder.cshtml" />
+    <Content Include="Views\Admin\EditOrder.cshtml" />
+    <Content Include="Views\Login\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

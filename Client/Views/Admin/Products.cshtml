@@ -19,6 +19,7 @@
                         <th scope="col">Category</th>
                         <th scope="col">Price</th>
                         <th scope="col">Specifications</th>
+                        <th scope="col">Stock</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
@@ -30,6 +31,7 @@
                             <td>@product.Category.Name</td>
                             <td>@product.Price.ToString("C")</td>
                             <td>@product.Specification</td>
+                            <td>@product.Stock</td>
                             <td>
                                 <a href="@Url.Action("Product", "Admin", new { id = product.Id })" class="btn btn-outline-primary btn-sm">Details</a>
                                 <a href="@Url.Action("UpdateProduct", "Admin", new { id = product.Id })" class="btn btn-outline-warning btn-sm">Edit</a>

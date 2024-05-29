@@ -21,7 +21,8 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">Add, edit, or delete categories.</p>
-                    <a href="/Admin/Categories" class="btn btn-primary">Go to Categories</a>
+                    <a href="@Url.Action("Categories", "Admin")" class="btn btn-outline-primary">Go to Categories</a>
+
                 </div>
             </div>
         </div>
@@ -32,7 +33,8 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">Add, edit, or delete products.</p>
-                    <a href="/Admin/Products" class="btn btn-primary">Go to Products</a>
+                    <a href="@Url.Action("Products", "Admin")" class="btn btn-outline-primary">Go to Products</a>
+
                 </div>
             </div>
         </div>
@@ -43,7 +45,8 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">View and manage user accounts.</p>
-                    <a href="/Admin/Customers" class="btn btn-primary">Go to Customers</a>
+                    <a href="@Url.Action("Customers", "Admin")" class="btn btn-outline-primary">Go to Customers</a>
+
                 </div>
             </div>
         </div>
@@ -54,20 +57,11 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">View and manage orders.</p>
-                    <a href="/Admin/Orders" class="btn btn-primary">Go to Orders</a>
+                    <a href="@Url.Action("Orders", "Admin")" class="btn btn-outline-primary">Go to Orders</a>
+
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card border-primary mb-3">
-                <div class="card-header bg-primary text-white">
-                    View Reports
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Access sales and performance reports.</p>
-                    <a href="/Admin/Reports" class="btn btn-primary">View Reports</a>
-                </div>
-            </div>
-        </div>
+       
     </div>
 </div>
