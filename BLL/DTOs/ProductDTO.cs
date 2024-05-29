@@ -32,5 +32,10 @@ namespace BLL.DTOs
         [Required]
 
         public DateTime ModifiedTime { get; set; }
+
+        public string ImagePath { get; set; }
+
+        [Required]
+        public int Stock { get; set; }
     }
 }

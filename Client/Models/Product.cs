@@ -29,11 +29,14 @@ namespace Client.Models
         [Required]
         public DateTime CreatedTime { get; set; }
         [Required]
-
         public DateTime ModifiedTime { get; set; }
 
-        public Category Category { get; set; }
+        public string ImagePath { get; set; }
 
+        [Required]
+        public int Stock { get; set; }
+
+        public Category Category { get; set; }
         public List<InventoryLog> InventoryLogs { get; set; }
         public List<OrderItem> OrderItems { get; set; }
         public  List<CartItem> CartItems { get; set; }

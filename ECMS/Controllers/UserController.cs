@@ -82,7 +82,7 @@ namespace ECMS.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpDelete]
         //[Logged]
         //[Admin]
         [Route("api/users/delete/{id}")]

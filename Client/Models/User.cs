@@ -20,6 +20,7 @@ namespace Client.Models
         public string LastName { get; set; }
 
         [EmailAddress]
+        [Required]
         public string Email { get; set; }
 
         [Required]
@@ -30,15 +31,12 @@ namespace Client.Models
         [StringLength(200)]
         public string Address { get; set; }
 
-        [Required]
         public DateTime JoinDate { get; set; }
 
         [Required]
         [Phone]
         public string Phone { get; set; }
 
-        [Required]
-        [StringLength(20)]
         public string Role { get; set; }
 
         public List<Order> Orders { get; set; }

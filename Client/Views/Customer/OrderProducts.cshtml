@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "OrderProducts";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
 }
 
 <div class="container mt-5">
@@ -36,7 +36,7 @@
                                 <td>$@item.UnitPrice</td>
                                 <td>@item.Quantity</td>
                                 <td>$@item.TotalPrice</td>
-                                <td><a href="@Url.Action("Product", "Admin", new { id = item.Id })" class="btn btn-outline-secondary">View Product</a></td>
+                                <td><a href="@Url.Action("Product", "Customer",new { id = item.Id })" class="btn btn-outline-secondary">View Product</a></td>
                             </tr>
                         }
                     </tbody>

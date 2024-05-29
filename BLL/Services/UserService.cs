@@ -185,7 +185,11 @@ namespace BLL.Services
                 OrderDTO orderDTO = new OrderDTO();
                 orderDTO.Id = item2.Id;
                 orderDTO.CustomerId = item2.CustomerId;
-
+                orderDTO.TotalAmount = item2.TotalAmount;
+                orderDTO.Status = item2.Status;
+                orderDTO.OrderDate = item2.OrderDate;
+                orderDTO.ShippingAddress = item2.ShippingAddress;
+                orderDTO.BillingAddress = item2.BillingAddress;
                 userOrderDTO.Orders.Add(orderDTO);
             }
 

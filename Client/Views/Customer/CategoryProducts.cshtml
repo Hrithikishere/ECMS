@@ -1,0 +1,48 @@
+﻿@model Client.Models.Category
+
+@{
+    ViewBag.Title = "CategoryProducts";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Products in @Model.Name</h2>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">@Model.Name</h3>
+            <p class="card-text">@Model.Description</p>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Specifications</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.Products)
+                        {
+                            <tr>
+                                <td>@product.Name</td>
+                                <td>@product.Price.ToString("C")</td>
+                                <td>@product.Specification</td>
+                                <td>
+                                    <a href="@Url.Action("Product", "Customer", new { id = product.Id })" class="btn btn-outline-primary">Details</a>
+                                    <a href="@Url.Action("AddToCart", "Customer", new { id = product.Id })" class="btn btn-outline-success btn-sm">Add to Cart</a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <a href="@Url.Action("Categories", "Customer")" class="btn btn-secondary">Back to Categories</a>
+        </div>
+    </div>
+</div>

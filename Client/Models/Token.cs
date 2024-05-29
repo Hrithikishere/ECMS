@@ -18,5 +18,6 @@ namespace Client.Models
         public DateTime? DeletedAt { get; set; }
         [Required]
         public string UserId { get; set; }
+        public string UserRole { get; set; }
     }
 }

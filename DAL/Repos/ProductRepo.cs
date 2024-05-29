@@ -87,6 +87,8 @@ namespace DAL.Repos
                 existingProduct.CategoryId = obj.CategoryId;
                 existingProduct.ModifiedTime = obj.ModifiedTime;
                 existingProduct.Price = obj.Price;
+                existingProduct.ImagePath = obj.ImagePath;
+                existingProduct.Stock = obj.Stock;
                 //db.Entry(existingProduct).CurrentValues.SetValues(obj);
                 return db.SaveChanges() > 0;
             }

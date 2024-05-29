@@ -47,7 +47,7 @@ namespace DAL
         {
             return new TokenRepo();
         }
-        public static IAuth<bool, string> AuthData()
+        public static IAuth<User, string> AuthData()
         {
             return new UserRepo();
         }

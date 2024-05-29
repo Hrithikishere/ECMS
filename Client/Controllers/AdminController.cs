@@ -38,7 +38,6 @@ namespace Client.Controllers
         [HttpGet]
         public ActionResult AddCategory()
         {
-
             return View();
         }
 
@@ -224,11 +223,81 @@ namespace Client.Controllers
         public async Task<ActionResult> Customer(int id)
         {
             var data = await _apiService.GetAsync<User>($"users/{id}");
-            //data.Category = await _apiService.GetAsync<Category>($"categories/{categoryId}");
-
             return View(data);
         }
-        
+
+
+        [HttpGet]
+        public ActionResult AddCustomer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddCustomer(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                user.Role = "Customer";
+                user.JoinDate = DateTime.Now;
+                var success = await _apiService.PostAsync("users/create", user);
+                if (success)
+                {
+                    return RedirectToAction("Customers", "Admin");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Failed to create category.");
+                }
+            }
+
+            return View(user);
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult> UpdateCustomer(int id)
+        {
+            var user = await _apiService.GetAsync<User>($"users/{id}");
+
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateCustomer(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = await _apiService.PostAsync("users/update", user);
+                if (success)
+                {
+                    return RedirectToAction("Customers", "Admin");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Failed to update product.");
+                }
+            }
+
+            return View(user);
+        }
+
+        public async Task<ActionResult> DeleteCustomer(int id)
+        {
+            var success = await _apiService.DeleteAsync($"users/delete/{id}");
+            if (success)
+            {
+                return RedirectToAction("Customers", "Admin");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Failed to delete category.");
+            }
+
+            return RedirectToAction("Customers", "Admin");
+        }
+
+
 
         //Orders -------------------------------------
 
@@ -248,13 +317,17 @@ namespace Client.Controllers
             var data = await _apiService.GetAsync<Order>($"orders/orderitems/{id}");
             foreach (var order in data.OrderItems)
             {
-                order.Product = await _apiService.GetAsync<Product>($"products/{id}");
+                order.Product = await _apiService.GetAsync<Product>($"products/{order.ProductId}");
             }
 
             return View(data);
         }
-        
 
+        //Logout ------------------------------------------
 
+        public ActionResult Logout()
+        {
+            return RedirectToAction("Index", "Admin");
+        }
     }
 }

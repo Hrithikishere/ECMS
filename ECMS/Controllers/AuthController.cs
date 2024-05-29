@@ -34,9 +34,32 @@ namespace ECMS.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, new { Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        [Route("api/isadmin")]
+        public HttpResponseMessage IsUserAdmin(string tkey)
+        {
+            try
+            {
+                var res = AuthService.IsUserAdmin(tkey);
+                if (res) {
+
+                    return Request.CreateResponse(HttpStatusCode.OK, res);
+
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, res);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new { Message = ex.Message });
+            }
+        }
         
         [HttpPost]
-        [Logged]
+        //[Logged]
         [Route("api/logout")]
         public HttpResponseMessage Logout(LogoutModel logoutModel)
         {

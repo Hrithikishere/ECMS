@@ -22,6 +22,11 @@ namespace DAL.Models
         [Required]
         public string Description { get; set; }
 
+        public string ImagePath { get; set; }
+        
+        [Required]
+        public int Stock { get; set; }
+
         [Required]
         public double Price { get; set; }
 

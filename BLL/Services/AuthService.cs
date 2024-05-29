@@ -13,13 +13,14 @@ namespace BLL.Services
     {
         public static TokenDTO Authenticate(string username, string password)
         {
-            bool result = DataAccessFactory.AuthData().Authenticate(username, password);
-            if(result)
+            var user = DataAccessFactory.AuthData().Authenticate(username, password);
+            if(user!=null)
             {
                 var token = new Token();
                 token.UserId = username;
                 token.CreatedAt = DateTime.Now;
                 token.TKey = Guid.NewGuid().ToString();
+                token.UserRole = user.Role;
                 var ret = DataAccessFactory.TokenData().Create(token);
                 if(ret != null)
                 {
@@ -27,8 +28,8 @@ namespace BLL.Services
                     tokenDTO.UserId = token.UserId;
                     tokenDTO.CreatedAt = token.CreatedAt;
                     tokenDTO.TKey = token.TKey;
+                    tokenDTO.UserRole = user.Role;
                     return tokenDTO;
-
                 }
             }
 

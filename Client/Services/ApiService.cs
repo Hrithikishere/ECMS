@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Client.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +63,33 @@ namespace Client.Services
             }
         }
 
+        public async Task<TResponse> PostAsync<TResponse, TData>(string endpoint, TData data)
+        {
+            var jsonContent = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync(endpoint, jsonContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<TResponse>();
+            }
+            else
+            {
+                throw new Exception($"API request failed with status code {response.StatusCode}");
+            }
+        }
+
+        public async Task<TResponse> PostAsync<TResponse>(string endpoint, string token)
+        {
+            var url = $"{endpoint}/{token}";
+            var response = await _httpClient.PostAsync(url, null);
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsAsync<TResponse>();
+            }
+            else
+            {
+                throw new Exception($"API request failed with status code {response.StatusCode}");
+            }
+        }
 
 
     }

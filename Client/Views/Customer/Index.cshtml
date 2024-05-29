@@ -1,0 +1,35 @@
+﻿@model List<Client.Models.Category>
+@{
+    ViewBag.Title = "Welcome Home";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome, @User.Identity.Name!</h1>
+        <p class="lead">We are glad to have you back. Explore the latest products and offers just for you.</p>
+        <hr class="my-4">
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h2 class="text-center my-5">Shop by Category</h2>
+            <div class="row">
+                @foreach (var category in Model)
+                {
+                    <div class="col-md-3 mb-4">
+                        <a href="@Url.Action("CategoryProducts", "Customer", new { id = category.Id })" class="text-decoration-none text-dark">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex flex-column justify-content-between">
+                                    <h5 class="card-title text-center">@category.Name</h5>
+                                    <p class="card-text text-muted text-center">@category.Description</p>
+                                    <span class="stretched-link"></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

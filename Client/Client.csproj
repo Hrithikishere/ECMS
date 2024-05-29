@@ -143,7 +143,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -151,6 +153,8 @@
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\InventoryLog.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\LogoutModel.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\Product.cs" />
@@ -160,6 +164,18 @@
     <Compile Include="Services\ApiService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\5700g.jpg" />
+    <Content Include="Assets\Images\a7mark3.jpg" />
+    <Content Include="Assets\Images\ad80hw.jpg" />
+    <Content Include="Assets\Images\alubukhara.jpg" />
+    <Content Include="Assets\Images\board.jpg" />
+    <Content Include="Assets\Images\chess.jpg" />
+    <Content Include="Assets\Images\masala.jpg" />
+    <Content Include="Assets\Images\panjabi.jpg" />
+    <Content Include="Assets\Images\playpen.jpg" />
+    <Content Include="Assets\Images\redchilli.jpg" />
+    <Content Include="Assets\Images\shirt.jpg" />
+    <Content Include="Assets\Images\tshirt.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -233,6 +249,17 @@
     <Content Include="Views\Admin\UpdateCategory.cshtml" />
     <Content Include="Views\Admin\AddProduct.cshtml" />
     <Content Include="Views\Admin\UpdateProduct.cshtml" />
+    <Content Include="Views\Admin\AddCustomer.cshtml" />
+    <Content Include="Views\Admin\UpdateCustomer.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\Categories.cshtml" />
+    <Content Include="Views\Customer\Category.cshtml" />
+    <Content Include="Views\Customer\CategoryProducts.cshtml" />
+    <Content Include="Views\Customer\Products.cshtml" />
+    <Content Include="Views\Customer\Orders.cshtml" />
+    <Content Include="Views\Customer\Product.cshtml" />
+    <Content Include="Views\Customer\OrderProducts.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

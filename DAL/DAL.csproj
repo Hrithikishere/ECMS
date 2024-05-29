@@ -67,6 +67,10 @@
     <Compile Include="Migrations\202405262111496_TokenDb.Designer.cs">
       <DependentUpon>202405262111496_TokenDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202405290937430_update-token-products.cs" />
+    <Compile Include="Migrations\202405290937430_update-token-products.Designer.cs">
+      <DependentUpon>202405290937430_update-token-products.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CartItem.cs" />
@@ -102,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202405262111496_TokenDb.resx">
       <DependentUpon>202405262111496_TokenDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202405290937430_update-token-products.resx">
+      <DependentUpon>202405290937430_update-token-products.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

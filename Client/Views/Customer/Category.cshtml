@@ -1,0 +1,21 @@
+﻿@model Client.Models.Category
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<h2>Category</h2>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Category Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">@Model.Description</p>
+        </div>
+        <div class="card-footer text-right">
+            <a href="@Url.Action("Categories", "Customer")" class="btn btn-secondary">Back to Categories</a>
+        </div>
+    </div>
+</div>

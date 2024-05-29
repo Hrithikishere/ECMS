@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace DAL.Repos
 {
-    internal class UserRepo : Repo, IRepo<User, int, bool>, IAuth<bool, string>
+    internal class UserRepo : Repo, IRepo<User, int, bool>, IAuth<User, string>
     {
-        public bool Authenticate(string username, string password)
+        public User Authenticate(string username, string password)
         {
             var data = db.Users.FirstOrDefault(user=> user.Email.Equals(username) && user.Password == password);
             if (data != null)
             {
-                return true;
+                return data;
             }
-            return false;
+            return null;
         }
 
         public bool Create(User obj)
@@ -73,6 +73,19 @@ namespace DAL.Repos
             catch (Exception ex)
             {
                 Console.WriteLine($"Error occurred while reading user with Id {id}: {ex.Message}");
+                return null;
+            }
+        }
+        
+        public User Read(string username)
+        {
+            try
+            {
+                return db.Users.FirstOrDefault(user => user.Email.Equals(username));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred in db while reading user with username {username}: {ex.Message}");
                 return null;
             }
         }
